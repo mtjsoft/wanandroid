@@ -6,13 +6,12 @@
  目前文章详情，使用的是复制链接到剪切板。因为个人小程序不支持打开外部链接。本人也是很无奈啊。没办法，个人的小程序限制太多，如果可以的话，还是尽量搞一个企业账号玩玩吧！我正在准备注册一个“个体工商户”的小程序账户，等注册成功了，再把文章详情的外部链接加上试一试。
 # 4、未来计划
  ①、“个体工商户”的小程序账户注册好之后，将文章详情链接加上。
- 
- ②、将玩android的开放API提供的“待办事项”模块加上。
 # 5、小程序界面
 ![首页](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/%E9%A6%96%E9%A1%B5.png)     ![热搜](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/%E7%83%AD%E6%90%9C.png)
-![体系](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/%E4%BD%93%E7%B3%BB.png)     ![我的](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/%E6%88%91%E7%9A%84.png)
-![文章列表](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/%E6%96%87%E7%AB%A0%E5%88%97%E8%A1%A8.png)     ![登录](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/%E7%99%BB%E5%BD%95.png)
-![体系](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/%E9%A1%B9%E7%9B%AE.png)
+![体系](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/%E4%BD%93%E7%B3%BB.png)     ![公众号](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/%E5%85%AC%E4%BC%97%E5%8F%B7.png) 
+![我的](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/%E6%88%91%E7%9A%84.png)     ![文章列表](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/%E6%96%87%E7%AB%A0%E5%88%97%E8%A1%A8.png)     
+![登录](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/%E7%99%BB%E5%BD%95.png)
+
 
 # 6、小程序上线接口：
 由于小程序上线必须要求服务器域名只支持https协议，所以我将玩android的api数据在我本人的服务器上转发了一下。
@@ -404,7 +403,7 @@ public class WanAndroidApiController {
     /**
      * 新增一条Todo
      *
-     * @param typename     方法：POST
+     * @param typename 方法：POST
      *                 参数：
      *                 title: 新增标题
      *                 content: 新增详情
@@ -557,11 +556,78 @@ public class WanAndroidApiController {
      */
     @PostMapping(value = "/todo/listdone")
     public String listdone(@RequestParam(value = "typename") String typename, @RequestParam(value = "pagernumber") int pagernumber,
-                            @RequestParam(value = "username") String username) throws Exception {
+                           @RequestParam(value = "username") String username) throws Exception {
         //url
         String url = "http://www.wanandroid.com/lg/todo/listdone/" + typename + "/json/" + pagernumber;
         //get请求
         HttpMethod method = HttpMethod.POST;
+        // 封装参数，千万不要替换为Map与HashMap，否则参数无法传递
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+        return HttpClient.init().client(url, method, params, username);
+    }
+
+    /**
+     * 获取公众号列表
+     *
+     * @param username
+     * @return
+     * @throws Exception
+     */
+    @GetMapping(value = "/wxarticle/chapters")
+    public String chapters(String username) throws Exception {
+        //url
+        String url = "http://wanandroid.com/wxarticle/chapters/json";
+        //get请求
+        HttpMethod method = HttpMethod.GET;
+        // 封装参数，千万不要替换为Map与HashMap，否则参数无法传递
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+        return HttpClient.init().client(url, method, params, username);
+    }
+
+    /**
+     * 查看某个公众号历史数据
+     *
+     * @param username
+     * @param id
+     * @param pager    方法：GET 参数：
+     *                 公众号 ID：拼接在 url 中，eg:405
+     *                 公众号页码：拼接在url 中，eg:1
+     * @return
+     * @throws Exception
+     */
+    @GetMapping(value = "/wxarticle/list")
+    public String wxarticlelist(String username, String id, String pager) throws Exception {
+        //url
+        String url = "http://wanandroid.com/wxarticle/list/" + id + "/" + pager + "/json";
+        //get请求
+        HttpMethod method = HttpMethod.GET;
+        // 封装参数，千万不要替换为Map与HashMap，否则参数无法传递
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+        return HttpClient.init().client(url, method, params, username);
+    }
+
+    /**
+     * 在某个公众号中搜索历史文章
+     *
+     * @param username
+     * @param id
+     * @param pager
+     * @param k        方法：GET
+     *                 参数：
+     *                 公众号 ID：拼接在 url 中，eg:405
+     *                 公众号页码：拼接在url 中，eg:1
+     * @return
+     * @throws Exception
+     */
+    @GetMapping(value = "/wxarticle/list/key")
+    public String wxarticlelist(String username, String id, String pager, String k) throws Exception {
+        //url
+        String url = "http://wanandroid.com/wxarticle/list/" + id + "/" + pager + "/json";
+        if (k != null && k.length() > 0) {
+            url = "http://wanandroid.com/wxarticle/list/" + id + "/" + pager + "/json?k=" + k;
+        }
+        //get请求
+        HttpMethod method = HttpMethod.GET;
         // 封装参数，千万不要替换为Map与HashMap，否则参数无法传递
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
         return HttpClient.init().client(url, method, params, username);
