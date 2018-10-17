@@ -1,0 +1,68 @@
+/* pages/hot/hot.wxss */
+
+.title {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #fff;
+}
+
+.flexrow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 10px;
+  background-color: #F5F5F5;
+}
+
+.item {
+  text-align: center;
+  background-color: #fff;
+  font-size: 16px;
+  min-width: 50px;
+  padding: 8px;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+
+.toprow{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background-color: #F5F5F5;
+}
+
+.input{
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  padding-left: 16px;
+  padding-right: 30%;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  width: 100%;
+  background-color: #fff;
+  font-size: 16px;
+}
+
+.key{
+  position: absolute;
+  text-align: center;
+  background-color: #1B82D1;
+  color: #fff;
+  right: 10px;
+  font-size: 16px;
+  width: 20%;
+  padding: 8px;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+}

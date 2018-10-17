@@ -1,0 +1,25 @@
+<!--pages/project/project.wxml-->
+<view class="page">
+  <!--1
+  <scroll-view scroll-x="true" style='width:100%;'>
+    <view class='toptyperow'>
+      <block wx:for="{{typelist}}">
+        <text wx:if="{{item.visible == 0}}" class='typetitleno' id='{{index}}' bindtap='choosetype'>{{item.name}}</text>
+        <text wx:if="{{item.visible == 1}}" class='typetitlese' id='{{index}}' bindtap='choosetype'>{{item.name}}</text>
+      </block>
+    </view>
+  </scroll-view>-->
+
+  <block wx:for="{{pagerList}}">
+    <view class='liststyle' id='{{item.link}}' bindtap='detail'>
+
+      <image class='projectimage' src='{{item.envelopePic}}' mode='aspectFit' ></image>
+
+      <view class='toptypecolumn'>
+        <text class='title '>{{item.title}}</text>
+        <text class='desc'>{{item.desc}}</text>
+        <text class='author'>{{item.niceDate}} {{item.author}}</text>
+      </view>
+    </view>
+  </block>
+</view>

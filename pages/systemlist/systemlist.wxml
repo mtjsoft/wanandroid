@@ -1,0 +1,30 @@
+<!--pages/systemlist/systemlist.wxml-->
+<view class="page">
+  <scroll-view scroll-x="true" style='width:100%;'>
+    <view class='toptyperow'>
+      <block wx:for="{{typelist}}">
+        <text wx:if="{{item.visible == 0}}" class='typetitleno' id='{{index}}' bindtap='choosetype'>{{item.name}}</text>
+        <text wx:if="{{item.visible == 1}}" class='typetitlese' id='{{index}}' bindtap='choosetype'>{{item.name}}</text>
+      </block>
+    </view>
+  </scroll-view>
+
+  <block wx:for="{{pagerList}}">
+    <view class='liststyle'>
+      <view class='listtop' id='{{item.link}}' bindtap='detail'>
+        <view>
+          <image class='listtopimage' src='../../images/head.jpg'></image>
+        </view>
+        <view style='font-size: 12px;color: #646464;'>{{item.author}}</view>
+        <view class='listtoptime'>{{item.niceDate}}</view>
+      </view>
+      <text class='title' id='{{item.link}}' bindtap='detail'>{{item.title}}</text>
+      <view class='listtop'>
+        <view class='chapterName' id='{{item.chapterId}}' bindtap='chapter'>{{item.chapterName}}</view>
+        <image wx:if="{{!item.collect}}" class='collect' src='../../images/img_collect.png' id='{{index}}' bindtap='collect'></image>
+        <image wx:if="{{item.collect}}" class='collect' src='../../images/img_collect_ed.png' id='{{index}}' bindtap='collect'></image>
+      </view>
+    </view>
+  </block>
+
+</view>

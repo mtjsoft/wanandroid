@@ -1,0 +1,25 @@
+<!--pages/notdo/notdo.wxml-->
+<view class="page">
+  <scroll-view scroll-x="true" style='width:100%;'>
+    <view class='toptyperow'>
+      <block wx:for="{{typelist}}">
+        <text wx:if="{{item.visible == 0}}" class='typetitleno' id='{{index}}' bindtap='choosetype'>{{item.name}}</text>
+        <text wx:if="{{item.visible == 1}}" class='typetitlese' id='{{index}}' bindtap='choosetype'>{{item.name}}</text>
+      </block>
+    </view>
+  </scroll-view>
+  <block wx:for="{{pagerList}}">
+    <view class='liststyle'>
+      <view class='toptypecolumn'>
+        <text class='title'>{{item.title}}</text>
+        <text class='desc'>{{item.content}}</text>
+        <text class='author'>设定时间：{{item.dateStr}}</text>
+        <view class='bottomrow'>
+          <view class='delete' id='{{index}}' bindtap='deletetodo'>删除</view>
+          <view class='over' id='{{index}}' bindtap='overtodo'>完成</view>
+          <view class='edit' id='{{index}}' bindtap='edittodo'>编辑</view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

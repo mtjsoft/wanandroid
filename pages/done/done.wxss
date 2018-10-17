@@ -1,0 +1,51 @@
+/* pages/done/done.wxss */
+
+.toptypecolumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 16px;
+  color: #1b82d1;
+}
+
+.desc {
+  font-size: 14px;
+  color: #9f9f9f;
+}
+
+.author {
+  font-size: 12px;
+  color: rgb(51, 49, 49);
+}
+
+.bottomrow {
+  display: flex;
+  margin-top: 5px;
+  flex-direction: row-reverse;
+  background-color: #fff;
+}
+
+.delete {
+  padding-bottom: 5px;
+  padding-top: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #f00;
+  font-size: 12px;
+  color: #fff;
+  border-radius: 2px;
+}
+
+.back {
+  padding-bottom: 5px;
+  padding-top: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #1b82d1;
+  font-size: 12px;
+  color: #fff;
+  border-radius: 2px;
+  margin-right: 10px;
+}

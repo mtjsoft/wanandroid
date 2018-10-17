@@ -1,0 +1,46 @@
+/* pages/todo/todo.wxss */
+.flexrow {
+  display: flex;
+  padding: 10px;
+  flex-direction: row;
+  background-color: #f5f5f5;
+  margin-bottom: 1px;
+}
+
+.lefttext{
+  width: 15%;
+  padding: 10px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.inputinfo{
+  background-color: #f5f5f5;
+  border-radius: 3px;
+  width: 85%;
+  height: auto;
+  min-height: 40px;
+  border: 1px solid #1B82D1;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.inputtime{
+  background-color: #f5f5f5;
+  border-radius: 3px;
+  border: 1px solid #1B82D1;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.savebtu{
+  margin-top: 20px;
+  font-size: 16px;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  background-color: #1B82D1;
+  border-radius: 3px;
+  margin-left: 16px;
+  margin-right: 16px;
+}

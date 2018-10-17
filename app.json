@@ -1,0 +1,73 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/hot/hot",
+    "pages/me/me",
+    "pages/system/system",
+    "pages/search/search",
+    "pages/login/login",
+    "pages/register/register",
+    "pages/mycollect/collect",
+    "pages/systemlist/systemlist",
+    "pages/about/about",
+    "pages/webview/webview",
+    "pages/project/project",
+    "pages/notdo/notdo",
+    "pages/done/done",
+    "pages/todo/todo",
+    "pages/chapters/chapters",
+    "pages/chapterslist/chapterslist"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#1B82D1",
+    "navigationBarTitleText": "玩android",
+    "navigationBarTextStyle": "light",
+    "backgroundColor": "#f5f5f5"
+  },
+  "networkTimeout": {
+    "request": 20000,
+    "connectSocket": 20000,
+    "uploadFile": 20000,
+    "downloadFile": 20000
+  },
+  "tabBar": {
+    "color": "#8A8A8A",
+    "selectedColor": "#1B82D1",
+    "borderStyle": "#1B82D1",
+    "backgroundColor": "#FFF",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/img_index.png",
+        "selectedIconPath": "images/img_index_click.png"
+      },
+      {
+        "pagePath": "pages/hot/hot",
+        "text": "热搜",
+        "iconPath": "images/img_hot.png",
+        "selectedIconPath": "images/img_hot_click.png"
+      },
+      {
+        "pagePath": "pages/system/system",
+        "text": "体系",
+        "iconPath": "images/img_tixi.png",
+        "selectedIconPath": "images/img_tixi_click.png"
+      },
+      {
+        "pagePath": "pages/chapters/chapters",
+        "text": "公众号",
+        "iconPath": "images/img_wxarticle.png",
+        "selectedIconPath": "images/img_wxarticle_click.png"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "text": "我的",
+        "iconPath": "images/img_me.png",
+        "selectedIconPath": "images/img_me_click.png"
+      }
+    ]
+  },
+  "debug": true
+}

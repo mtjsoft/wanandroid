@@ -1,0 +1,9 @@
+<!--pages/login/login.wxml-->
+<image class='loginbg' mode='widthFix' src='../../images/img_login_bg.png'>
+</image>
+<view class='loginView'>
+  <input class='input' placeholder='请输入用户名' bindinput='loginusername'></input>
+  <input class='input' placeholder='请输入密码' bindinput='loginpassword'></input>
+  <view class='loginbtu' bindtap='clicklogin'>登陆</view>
+  <text class='text_f_w_black16' style='color: #fff;text-align: right;' bindtap='register'>立即注册</text>
+</view>

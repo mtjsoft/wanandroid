@@ -1,0 +1,93 @@
+/* pages/systemlist/systemlist.wxss */
+
+.toptyperow {
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: auto;
+  background-color: #f5f5f5;
+  padding-bottom: 2px;
+}
+/**
+*类型选中的样式
+*/
+.typetitlese {
+  width: auto;
+  font-size: 14px;
+  height: 23px;
+  line-height: 23px;
+  text-align: center;
+  color: #1b82d1;
+  flex-grow: 1;
+  background-color: #fff;
+  padding: 10px;
+  white-space:nowrap;
+  border-bottom: 2px solid #1b82d1;
+}
+/**
+*类型未选中的样式
+*/
+.typetitleno {
+  width: auto;
+  font-size: 14px;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+  color: #000;
+  flex-grow: 1;
+  background-color: #fff;
+  padding: 10px;
+  white-space:nowrap;
+}
+
+
+.liststyle {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 10px;
+  border-bottom: 3px solid #f5f5f5;
+  font-size: 16px;
+}
+
+.listtop {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.listtopimage {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.listtoptime {
+  position: absolute;
+  right: 10px;
+  text-align: right;
+  color: #9f9f9f;
+  font-size: 14px;
+}
+
+.title {
+  font-size: 16px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.chapterName {
+  font-size: 12px;
+  color: #1b82d1;
+  margin-top: 5px;
+}
+
+.collect {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 0px;
+  padding: 10px;
+}

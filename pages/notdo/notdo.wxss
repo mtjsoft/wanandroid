@@ -1,0 +1,72 @@
+/* pages/notdo/notdo.wxss */
+.addtodo{
+  font-size: 16px;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #fff;
+  color: #2AB27F;
+  border-bottom: 2px solid #f5f5f5;
+}
+
+.toptypecolumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 16px;
+  color: #1b82d1;
+}
+
+.desc {
+  font-size: 14px;
+  color: #9f9f9f;
+}
+
+.author {
+  font-size: 12px;
+  color: rgb(51, 49, 49);
+}
+
+.bottomrow {
+  display: flex;
+  margin-top: 5px;
+  flex-direction: row-reverse;
+  background-color: #fff;
+}
+
+.delete {
+  padding-bottom: 5px;
+  padding-top: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #f00;
+  font-size: 12px;
+  color: #fff;
+  border-radius: 2px;
+}
+
+.over {
+  padding-bottom: 5px;
+  padding-top: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #2AB27F;
+  font-size: 12px;
+  color: #fff;
+  border-radius: 2px;
+  margin-right: 10px;
+}
+
+.edit {
+  padding-bottom: 5px;
+  padding-top: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #1b82d1;
+  font-size: 12px;
+  color: #fff;
+  border-radius: 2px;
+  margin-right: 10px;
+}

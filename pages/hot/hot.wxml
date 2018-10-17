@@ -1,0 +1,22 @@
+<!--pages/hot/hot.wxml-->
+<view class="page">
+
+  <view class='toprow'>
+    <input class='input' placeholder="这里输入关键词🔍" bindinput='keysou'></input>
+    <view class='key' bindtap='keyclick'>搜索</view>
+  </view>
+
+  <view class='title'>大家都在搜</view>
+  <view class='flexrow'>
+    <block wx:for="{{items}}" wx:for-index="index">
+      <view class='item' style='color:{{colorArr[index%8]}}' id='{{item.name}}' bindtap='wehotkey'>{{item.name}}</view>
+    </block>
+  </view>
+
+  <view class='title'>常用网站</view>
+  <view class='flexrow'>
+    <block wx:for="{{netaddress}}" wx:for-index="index">
+      <view class='item' style='color:{{colorArr[index%8]}}' id='{{item.link}}' bindtap='net'>{{item.name}}</view>
+    </block>
+  </view>
+</view>

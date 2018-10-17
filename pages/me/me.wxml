@@ -1,0 +1,33 @@
+<!--pages/me/me.wxml-->
+<view class='view'>
+  <image class='headimage' src='../../images/head.jpg' bindtap='login'></image>
+  <text style='margin-bottom: 40px;width: auto;font-size: 16px;' bindtap='login'>{{username}}</text>
+</view>
+<view class='usercenter' bindtap='newproject'>
+  <view class='text_f_w_16'>最新项目</view>
+  <image class='right' src='../../images/right.png'></image>
+</view>
+<view class='usercenter' bindtap='mycollect'>
+  <view class='text_f_w_16'>我的收藏</view>
+  <image class='right' src='../../images/right.png'></image>
+</view>
+<view class='usercenter' bindtap='addtodo'>
+  <view class='text_f_w_16'>添加待办</view>
+  <image class='right' src='../../images/right.png'></image>
+</view>
+<view class='usercenter' bindtap='notdo'>
+  <view class='text_f_w_16'>待办清单</view>
+  <image class='right' src='../../images/right.png'></image>
+</view>
+<view class='usercenter' bindtap='done'>
+  <view class='text_f_w_16'>完成清单</view>
+  <image class='right' src='../../images/right.png'></image>
+</view>
+<view class='usercenter' bindtap='about'>
+  <view class='text_f_w_16'>关于我们</view>
+  <image class='right' src='../../images/right.png'></image>
+</view>
+<view wx:if="{{username != '未登录'}}" class='usercenter' bindtap='loginout'>
+  <view class='text_f_w_16'>退出登陆</view>
+  <image class='right' src='../../images/right.png'></image>
+</view>

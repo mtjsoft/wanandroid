@@ -1,0 +1,42 @@
+<!--pages/todo/todo.wxml-->
+<view class='page' style='background-color: #fff;'>
+  <view class='flexrow'>
+    <view class='lefttext'>标题:</view>
+    <textarea class='inputinfo' placeholder='请输入标题' bindinput='titleinput' value='{{title}}'></textarea>
+  </view>
+  <view class='flexrow'>
+    <view class='lefttext'>详情:</view>
+    <textarea class='inputinfo' style='min-height: 80px;' placeholder='请输入详情' bindinput='descinput' value='{{desc}}'></textarea>
+  </view>
+  <view class='flexrow'>
+    <view class='lefttext'>时间:</view>
+    <view style='width:85%;'>
+      <picker mode="date" value="{{date}}" start="1978-01-01" end="2050-01-01" bindchange="bindDateChange">
+        <view class="picker">
+          <view class='inputtime'>{{dates}}</view>
+        </view>
+      </picker>
+    </view>
+  </view>
+  <view wx:if="{{status == -1}}" class='flexrow'>
+    <view class='lefttext'>类型:</view>
+    <view style='width:85%;'>
+      <picker mode="selector" value="{{index}}" range="{{objectArray}}" bindchange="bindTypeChange">
+        <view class="picker">
+          <view class='inputtime'>{{objectArray[index]}}</view>
+        </view>
+      </picker>
+    </view>
+  </view>
+  <!--<view wx:if="{{status != -1}}" class='flexrow'>
+    <view class='lefttext'>状态:</view>
+    <view style='width:85%;'>
+      <picker mode="selector" value="{{status}}" range="{{statusArray}}" bindchange="bindStatusChange">
+        <view class="picker">
+          <view class='inputtime'>{{statusArray[status]}}</view>
+        </view>
+      </picker>
+    </view>
+  </view>-->
+  <view class='savebtu' bindtap='submit'>提交</view>
+</view>

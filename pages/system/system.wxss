@@ -1,0 +1,34 @@
+/* pages/tixi/tixi.wxss */
+.title {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #fff;
+  margin-bottom: 1px;
+  color: #000;
+}
+
+.flexrow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 10px;
+  background-color: #F5F5F5;
+}
+
+.items{
+  font-size: 12px;
+  text-align: center;
+  background-color: #fff;
+  color: #fff;
+  min-width: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+}

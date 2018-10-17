@@ -1,0 +1,6 @@
+<!--pages/webview/webview.wxml-->
+<import src="../../wxParse/wxParse.wxml" />
+
+<view class='page'>
+  <template is="wxParse" data="{{wxParseData:article.nodes}}" />
+</view>

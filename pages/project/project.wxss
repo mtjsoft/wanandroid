@@ -1,0 +1,95 @@
+/* pages/project/project.wxss */
+
+.toptyperow {
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: auto;
+  background-color: #f5f5f5;
+  padding-bottom: 2px;
+}
+
+/**
+*类型选中的样式
+*/
+
+.typetitlese {
+  width: auto;
+  font-size: 14px;
+  height: 23px;
+  line-height: 23px;
+  text-align: center;
+  color: #1b82d1;
+  flex-grow: 1;
+  background-color: #fff;
+  padding: 10px;
+  white-space: nowrap;
+  border-bottom: 2px solid #1b82d1;
+}
+
+/**
+*类型未选中的样式
+*/
+
+.typetitleno {
+  width: auto;
+  font-size: 14px;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+  color: #000;
+  flex-grow: 1;
+  background-color: #fff;
+  padding: 10px;
+  white-space: nowrap;
+}
+
+.liststyle {
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  padding: 10px;
+  align-items: center;
+  border-bottom: 3px solid #f5f5f5;
+}
+
+.projectimage {
+  width: 30%;
+  height: 120px;
+  border-radius: 5px;
+}
+
+.toptypecolumn {
+  width: 70%;
+  display: flex;
+  margin-left: 10px;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 16px;
+  color: #000;
+  display: -webkit-box;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.desc {
+  font-size: 14px;
+  color: #9f9f9f;
+  display: -webkit-box;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.author {
+  font-size: 14px;
+  color: rgb(51, 49, 49);
+}

@@ -1,0 +1,17 @@
+<!--pages/chapters/chapters.wxml-->
+<view class="content">
+  <view class="left">
+    <block wx:for="{{pagerList}}">
+      <view class='item' wx:if="{{index%2==0}}" style='background-color:{{colorArr[index%6]}};height:{{heightArr[index]}}px;line-height:{{heightArr[index]}}px' id='{{item.id}}' bindtap='chaptersClick'>
+        {{item.name}}
+      </view>
+    </block>
+  </view>
+  <view class="right">
+    <block wx:for="{{pagerList}}">
+      <view class='item' wx:if="{{index%2==1}}" style='background-color:{{colorArr[index%6]}};height:{{heightArr[index]}}px;line-height:{{heightArr[index]}}px' id='{{item.id}}' bindtap='chaptersClick'>
+        {{item.name}}
+      </view>
+    </block>
+  </view>
+</view>

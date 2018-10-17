@@ -1,0 +1,30 @@
+<!--index.wxml-->
+<view class="page">
+  <view class="haibao">
+    <swiper indicator-dots="true" indicator-color='#1B82D1' indicator-active-color='#f00' autoplay='true' circular='true' interval='3000' duration='500'>
+      <block wx:for="{{banner}}">
+        <swiper-item>
+          <image class='imageBener' src="{{item.imagePath}}" id='{{item.url}}' bindtap='imageClick'></image>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+
+  <block wx:for="{{pagerList}}">
+    <view class='liststyle'>
+      <view class='listtop' id='{{item.link}}' bindtap='detail'>
+        <view>
+          <image class='listtopimage' src='../../images/head.jpg'></image>
+        </view>
+        <view style='font-size: 12px;color: #646464;'>{{item.author}}</view>
+        <view class='listtoptime'>{{item.niceDate}}</view>
+      </view>
+      <view class='title' id='{{item.link}}' bindtap='detail'>{{item.title}}</view>
+      <view class='listtop'>
+        <view class='chapterName' id='{{item.chapterId}}' bindtap='chapter'>{{item.chapterName}}</view>
+        <image wx:if="{{!item.collect}}" class='collect' src='../../images/img_collect.png' id='{{index}}' bindtap='collect'></image>
+        <image wx:if="{{item.collect}}" class='collect' src='../../images/img_collect_ed.png' id='{{index}}' bindtap='collect'></image>
+      </view>
+    </view>
+  </block>
+</view>
