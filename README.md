@@ -1,4 +1,4 @@
-# 1、小程序名称：玩androids
+# 1、小程序名称：玩androids（公众号列表修复版本已上传、正在审核）
  基于鸿洋大神的玩android开放API完成的《玩android》微信小程序版本，一起来学习小程序开发吧。
 # 2、小程序码：❤ 小程序已审核通过，上线了！！！扫码立即体验了。
 ![小程序码](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/gh_de1f6e6fea7e_258.jpg)
