@@ -38,7 +38,7 @@ Page({
         wx.hideNavigationBarLoading();
         // 停止下拉动作
         wx.stopPullDownRefresh();
-        var list = res.data
+        var list = res.data.data
         if (that.data.isRefresh) {
           that.setData({
             pagerList: list,
