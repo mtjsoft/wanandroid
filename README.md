@@ -3,9 +3,10 @@
 # 2、小程序码：❤ 小程序已审核通过，上线了！！！扫码立即体验了。
 ![小程序码](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/gh_de1f6e6fea7e_258.jpg)
 # 3、小程序完成情况说明：
- 目前文章详情，使用的是复制链接到剪切板。因为个人小程序不支持打开外部链接。本人也是很无奈啊。没办法，个人的小程序限制太多，如果可以的话，还是尽量搞一个企业账号玩玩吧！我正在准备注册一个“个体工商户”的小程序账户，等注册成功了，再把文章详情的外部链接加上试一试。
-# 4、未来计划
- ①、“个体工商户”的小程序账户注册好之后，将文章详情链接加上。
+ 目前文章详情，使用的是复制链接到剪切板。因为个人小程序不支持打开外部链接。本人也是很无奈啊。没办法，个人的小程序限制太多，如果可以的话，还是尽量搞一个企业账号玩玩吧！
+# 4、版本信息
+ 1、因为个人小程序不支持打开外部链接，目前文章详情使用的是复制链接到剪切板。
+ 2、修复因wanAndroid网站升级https域名接口无法访问到数据的问题。
 # 5、小程序界面
 ![首页](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/%E9%A6%96%E9%A1%B5.png)     ![热搜](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/%E7%83%AD%E6%90%9C.png)
 ![体系](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/%E4%BD%93%E7%B3%BB.png)     ![公众号](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/%E5%85%AC%E4%BC%97%E5%8F%B7.png) 
