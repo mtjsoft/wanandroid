@@ -1,10 +1,14 @@
 <!--pages/me/me.wxml-->
-<view class='view'>
-  <image class='headimage' src='../../images/head.jpg' bindtap='login'></image>
-  <text style='margin-bottom: 10px;width: auto;font-size: 16px;color: #fff;' bindtap='login'>{{username}}</text>
-</view>
-
-<image style='width: 100%;height:100rpx;' mode="aspectFill" src="../../images/wave.gif"></image>
+<view class="UCenter-bg">
+    <image src="/images/head.jpg" class="png" style="border-radius: 50%;margin-bottom: 10rpx;" mode="widthFix" bindtap='login'></image>
+    <view class="text-xl">{{username}}
+      <text class="text-df">v2.0</text>
+    </view>
+    <view class="margin-top-sm">
+      <text>By:马腾蛟</text>
+    </view>
+    <image src="/images/wave.gif" mode="scaleToFill" class="gif-wave"></image>
+  </view>
 
 <view class='usercenter' bindtap='newproject'>
   <view class='text_f_w_16'>最新项目</view>

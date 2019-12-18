@@ -1,4 +1,8 @@
 <!--index.wxml-->
+<cu-custom bgImage="https://image.weilanwl.com/color2.0/plugin/cjkz2329.jpg">
+    <view slot="content">首页</view>
+</cu-custom>
+
 <swiper class="card-swiper square-dot" indicator-dots="true" indicator-color='#1B82D1' indicator-active-color='#f00' autoplay='true' circular='true' interval='3000' duration='500' bindchange="cardSwiper">
   <swiper-item wx:for="{{banner}}" wx:key class="{{cardCur==index?'cur':''}}">
     <view class="swiper-item">
@@ -8,9 +12,8 @@
 </swiper>
 
 <block wx:for="{{pagerList}}">
-  <van-skeleton title avatar row="2" loading="{{loading}}">
-    <!-- 实际内容 -->
-    <view class='liststyle' bindtap='detail' data-index='{{index}}'>
+  <!-- 实际内容 -->
+    <view class='liststyle padding-xl radius shadow shadow-lg bg-white margin' bindtap='detail' data-index='{{index}}'>
       <view class='listtop'>
         <image class='listtopimage' src='/images/head.jpg'></image>
         <view style='font-size: 12px;color: #646464;'>{{item.author}}</view>
@@ -23,7 +26,6 @@
         <image wx:else class='collect' src='/images/img_collect.png' id='{{index}}' bindtap='collect'></image>
       </view>
     </view>
-  </van-skeleton>
 </block>
 
 <view class="loadmore">

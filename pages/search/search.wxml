@@ -1,6 +1,11 @@
 <!--pages/search/search.wxml-->
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">搜索</view>
+</cu-custom>
+
 <block wx:for="{{pagerList}}">
-  <view class='liststyle'>
+  <view class='liststyle padding-xl radius shadow shadow-lg bg-white margin'>
     <view class='listtop' id='{{item.link}}' bindtap='detail'>
       <view>
         <image class='listtopimage' src='../../images/head.jpg'></image>

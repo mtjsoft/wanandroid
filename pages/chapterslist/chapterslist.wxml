@@ -1,10 +1,15 @@
 <!--pages/chapterslist/chapterslist.wxml-->
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">公众号</view>
+</cu-custom>
+
 <van-search value="{{ key }}" placeholder="请输入搜索关键词" use-action-slot bind:change="keysou" bind:search="keyclick">
   <view slot="action" bind:tap="keyclick">搜索</view>
 </van-search>
 
 <block wx:for="{{pagerList}}">
-  <view class='liststyle'>
+  <view class='liststyle padding-xl radius shadow shadow-lg bg-white margin'>
     <view class='listtop' id='{{item.link}}' bindtap='detail'>
       <view>
         <image class='listtopimage' src='../../images/head.jpg'></image>

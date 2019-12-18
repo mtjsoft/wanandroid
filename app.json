@@ -23,7 +23,8 @@
     "navigationBarBackgroundColor": "#1B82D1",
     "navigationBarTitleText": "玩android",
     "navigationBarTextStyle": "white",
-    "backgroundColor": "#f5f5f5"
+    "backgroundColor": "#f5f5f5",
+    "navigationStyle": "custom"
   },
   "networkTimeout": {
     "request": 20000,
@@ -69,9 +70,12 @@
     ]
   },
   "usingComponents": {
+    "cu-custom": "/colorui/components/cu-custom",
     "van-skeleton": "/dist/skeleton/index",
     "van-search": "/dist/search/index",
-    "van-loading": "/dist/loading/index"
+    "van-loading": "/dist/loading/index",
+    "van-tab": "/dist/tab/index",
+    "van-tabs": "/dist/tabs/index"
   },
   "debug": true,
   "sitemapLocation": "sitemap.json"

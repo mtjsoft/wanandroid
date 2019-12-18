@@ -1,5 +1,9 @@
 <!--pages/hot/hot.wxml-->
 
+<cu-custom bgColor="bg-gradual-blue">
+  <view slot="content">热搜</view>
+</cu-custom>
+
 <van-search value="{{ key }}" placeholder="请输入搜索关键词" use-action-slot bind:change="keysou" bind:search="keyclick">
   <view slot="action" bind:tap="keyclick">搜索</view>
 </van-search>
@@ -14,6 +18,6 @@
 <view class='title'>常用网站</view>
 <view class='flexrow'>
   <block wx:for="{{netaddress}}" wx:for-index="index">
-    <view class='item' style='color:{{colorArr[index%8]}}' id='{{item.link}}' bindtap='net'>{{item.name}}</view>
+    <view class='item' style='color:{{colorArr[index%8]}}' data-index='{{index}}' bindtap='net'>{{item.name}}</view>
   </block>
 </view>

@@ -1,8 +1,11 @@
 <!--pages/register/register.wxml-->
-<image class='loginbg' mode='widthFix' src='../../images/img_login_bg2.jpg'>
-</image>
-<view class='loginView'>
-  <input class='input' placeholder='请输入用户名' bindinput='loginusername'></input>
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">注册</view>
+</cu-custom>
+
+<view class='bg-white' style="background-color: #fff;">
+  <input class='input' style="margin-top: 15%;" placeholder='请输入用户名' bindinput='loginusername'></input>
   <input class='input' placeholder='请输入密码' bindinput='loginpassword'></input>
   <view class='loginbtu' bindtap='clickregister'>立即注册</view>
 </view>

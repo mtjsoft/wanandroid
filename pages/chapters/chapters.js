@@ -7,8 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    colorArr: ["#009999", "#FF9900", "#4DCCF6", "#009999", "#FF9999", "#999933"],
-    heightArr: [],
+    colorArr: [],
+    colorCount: 1,
     pagerList: [],
     pagenumber: 1,
     isloadmore: false,
@@ -22,6 +22,11 @@ Page({
    */
   onLoad: function(options) {
     that = this
+    var colors = app.globalData.ColorList;
+    that.setData({
+      colorArr: colors,
+      colorCount: colors.length
+    })
     that.getPagerData()
   },
 
@@ -51,14 +56,6 @@ Page({
             pagerList: resultlist
           })
         }
-        //随机高度30~60
-        let heights = []
-        for (var i in that.data.pagerList) {
-          heights.push(Math.floor(Math.random() * 30) + 30)
-        }
-        that.setData({
-          heightArr: heights
-        })
       },
       fail: function() {
         // 隐藏导航栏加载框

@@ -1,6 +1,7 @@
 // pages/hot/hot.js
 //获取应用实例
 const app = getApp()
+const util = require('../../utils/util.js');
 var that = this
 Page({
 
@@ -90,16 +91,10 @@ Page({
    */
   net: function(event) {
     that = this; //不要漏了这句，很重要
-    var link = event.currentTarget.id
-    wx.setClipboardData({
-      data: link,
-      success: function (res) {
-        wx.showToast({
-          title: '已复制链接',
-          icon: 'success'
-        })
-      }
-    })
+    var index = event.currentTarget.dataset.index;
+    var name = that.data.netaddress[index].name;
+    var link = that.data.netaddress[index].link;
+    util.pushMsg(name, "[" + link + "](" + link + ")");
   },
 
   /**
