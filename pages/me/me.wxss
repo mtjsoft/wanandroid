@@ -1,14 +1,7 @@
 /* pages/me/me.wxss */
-.page {
-  width: 100%;
-  background-color: #fff;
-  font-size: 16px;
-}
-
 .view{
   width: 100%;
-  background-color: #fff;
-  margin-top: 15%;
+  background-color: #1B82D1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,6 +10,7 @@
 .headimage{
   width: 80px;
   height: 80px;
+  margin-top: 10%;
   border-radius: 50%;
   margin-bottom: 10px;
 }

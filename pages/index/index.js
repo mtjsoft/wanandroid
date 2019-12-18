@@ -1,9 +1,12 @@
 //index.js
 //获取应用实例
 const app = getApp()
+const util = require('../../utils/util.js');
 var that = this
 Page({
   data: {
+    loading:true,
+    cardCur: 0,
     banner: [],
     pagerList: [],
     pagernumber: 0,
@@ -50,13 +53,15 @@ Page({
         if (that.data.isRefresh) {
           that.setData({
             pagerList: list,
-            isRefresh: false
+            isRefresh: false,
+            loading: false
           })
         } else {
           var templist = that.data.pagerList
           var resultlist = templist.concat(list)
           that.setData({
-            pagerList: resultlist
+            pagerList: resultlist,
+            loading: false
           })
         }
       },
@@ -66,6 +71,13 @@ Page({
         // 停止下拉动作
         wx.stopPullDownRefresh();
       }
+    })
+  },
+
+  // cardSwiper
+  cardSwiper(e) {
+    this.setData({
+      cardCur: e.detail.current
     })
   },
 
@@ -81,19 +93,10 @@ Page({
    */
   detail: function(event) {
     that = this; //不要漏了这句，很重要
-    var link = event.currentTarget.id
-    /**wx.navigateTo({
-      url: '../webview/webview?link=' + link,
-    })*/
-    wx.setClipboardData({
-      data: link,
-      success: function(res) {
-        wx.showToast({
-          title: '已复制链接',
-          icon: 'success'
-        })
-      }
-    })
+    var index = event.currentTarget.dataset.index;
+    var title = that.data.pagerList[index].title;
+    var link = that.data.pagerList[index].link;
+    util.pushMsg(title, "[" + link + "](" + link +")");
   },
 
   /**

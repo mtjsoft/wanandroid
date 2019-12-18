@@ -53,7 +53,7 @@ Page({
    */
   keysou: function(e) {
     this.setData({
-      key: e.detail.value
+      key: e.detail
     })
   },
   /**
@@ -67,7 +67,6 @@ Page({
       })
     } else {
       app.globalData.key = that.data.key
-      console.log(app.globalData.key)
       wx.navigateTo({
         url: '../search/search',
       })

@@ -44,9 +44,8 @@
 }
 
 .collect{
-  width: 20px;
-  height: 20px;
+  width: 44rpx;
+  height: 44rpx;
   position: absolute;
-  right: 0px;
-  padding: 10px;
+  right: 10px;
 }

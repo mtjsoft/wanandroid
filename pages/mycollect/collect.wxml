@@ -13,7 +13,7 @@
       <text class='title' id='{{item.link}}' bindtap='detail'>{{item.title}}</text>
       <view class='listtop'>
         <view class='chapterName' id='{{item.chapterId}}' bindtap='chapter'>{{item.chapterName}}</view>
-        <image class='collect' src='../../images/img_collect_ed.png' id='{{index}}' bindtap='collect'></image>
+        <image class='collect' src='/images/img_collect_ed.png' id='{{index}}' bindtap='collect'></image>
       </view>
     </view>
   </block>
