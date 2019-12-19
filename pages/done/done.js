@@ -25,7 +25,9 @@ Page({
     }, {
       name: '生活',
       visible: '0'
-    }]
+    }],
+    active: '重要',
+    offsetTop: 0
   },
 
   /**
@@ -33,9 +35,9 @@ Page({
    */
   onLoad: function(options) {
     that = this
-    that.data.username = options.username
-    wx.setNavigationBarTitle({
-      title: '完成清单',
+    that.setData({
+      offsetTop: app.globalData.CustomBar,
+      username: options.username
     })
     that.getPagerData()
   },
@@ -87,25 +89,13 @@ Page({
   /**
    * 切换类型
    */
-  choosetype: function(event) {
-    that = this; //不要漏了这句，很重要
-    var index = event.currentTarget.id;
-    var listtitle = that.data.typelist;
-    for (var i in listtitle) {
-      if (i == index) {
-        listtitle[i].visible = 1
-      } else {
-        listtitle[i].visible = 0
-      }
-    }
+  onChange(event) {
+    var index = event.detail.index;
     that.setData({
-      typelist: listtitle,
-      id: index,
+      id: index + '',
+      active: event.detail.name,
       pagenumber: 1,
       isRefresh: true,
-    })
-    wx.setNavigationBarTitle({
-      title: that.data.typelist[index].name,
     })
     that.getPagerData()
   },
@@ -132,12 +122,9 @@ Page({
             title: res.data.errorMsg,
           })
         } else {
-          let update = []
-          for (var i in that.data.pagerList) {
-            if (i != index) {
-              update.push(that.data.pagerList[i])
-            }
-          }
+          var update = that.data.pagerList;
+          // 删除
+          update.splice(index, 1);
           that.setData({
             pagerList: update
           })
@@ -174,12 +161,9 @@ Page({
             title: res.data.errorMsg,
           })
         } else {
-          let update = []
-          for (var i in that.data.pagerList) {
-            if (i != index) {
-              update.push(that.data.pagerList[i])
-            }
-          }
+          var update = that.data.pagerList;
+          // 删除
+          update.splice(index, 1);
           that.setData({
             pagerList: update
           })

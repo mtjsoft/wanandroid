@@ -1,5 +1,6 @@
 // pages/mycollect/collect.js
 const app = getApp()
+const util = require('../../utils/util.js');
 var that = this
 Page({
 
@@ -67,16 +68,10 @@ Page({
    */
   detail: function(event) {
     that = this; //不要漏了这句，很重要
-    var link = event.currentTarget.id
-    wx.setClipboardData({
-      data: link,
-      success: function(res) {
-        wx.showToast({
-          title: '已复制链接',
-          icon: 'success'
-        })
-      }
-    })
+    var index = event.currentTarget.dataset.index;
+    var title = that.data.pagerList[index].title;
+    var link = that.data.pagerList[index].link;
+    util.pushMsg(title, "[" + link + "](" + link + ")");
   },
 
   /**
@@ -130,12 +125,9 @@ Page({
             })
           } else {
             //将选择的从列表移除，赋值给新的数组，再用新数组去赋值渲染页面
-            let update = []
-            for (var i in that.data.pagerList) {
-              if (i != postion) {
-                update.push(that.data.pagerList[i])
-              }
-            }
+            var update = that.data.pagerList;
+            // 删除
+            update.splice(postion, 1);
             that.setData({
               pagerList: update
             })

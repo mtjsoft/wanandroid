@@ -26,6 +26,7 @@
 
 .author {
   font-size: 12px;
+  margin-top: 10rpx;
   color: rgb(51, 49, 49);
 }
 

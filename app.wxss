@@ -28,6 +28,14 @@ page {
   margin-bottom: 10px;
 }
 
+.stickyClass {
+  width: 100%;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 999;
+}
+
 /**字体样式**/
 
 .text_w_w_black16 {

@@ -1,34 +1,55 @@
 /* pages/tixi/tixi.wxss */
-.title {
-  padding: 10px;
-  font-size: 16px;
-  background-color: #fff;
-  margin-bottom: 1px;
-  color: #000;
+
+/*  */
+.VerticalNav.nav {
+  width: 300rpx;
+  white-space: initial;
 }
 
-.flexrow {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding: 10px;
-  background-color: #F5F5F5;
-}
-
-.items{
-  font-size: 12px;
+.VerticalNav.nav .cu-item {
+  width: 100%;
   text-align: center;
   background-color: #fff;
-  color: #fff;
-  min-width: 50px;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  border-bottom-left-radius: 2px;
-  border-bottom-right-radius: 2px;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
-  margin-right: 10px;
-  margin-bottom: 5px;
+  margin: 0;
+  border: none;
+  height: 50px;
+  position: relative;
+  display: -webkit-box;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.VerticalNav.nav .cu-item.cur {
+  background-color: #f1f1f1;
+}
+.VerticalNav.nav .cu-item.cur::after {
+  content: "";
+  width: 8rpx;
+  height: 30rpx;
+  border-radius: 10rpx 0 0 10rpx;
+  position: absolute;
+  background-color: currentColor;
+  top: 0;
+  right: 0rpx;
+  bottom: 0;
+  margin: auto;
+}
+.VerticalBox{
+  display: flex;
+}
+.VerticalMain{
+  background-color: #f1f1f1;
+}
+
+.signLine{
+  position: relative;
+  display: -webkit-box;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
 }

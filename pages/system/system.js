@@ -7,8 +7,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-    colorArr: ["#4DCCF6", "#FF9999", "#999933", "#009999", "#FF9900", "#009999"],
-    tixiList: []
+    colorArr: [],
+    colorCount: 1,
+    list: [],
+    TabCur: 0,
+    MainCur: 0,
+    VerticalNavTop: 0,
+    load: true
   },
 
   /**
@@ -24,8 +29,16 @@ Page({
       url: app.globalData.baseUrl + '/tree',
       method: 'GET',
       success: function(res) {
+        let list = res.data.data;
+        for(var i = 0; i < list.length; i++){
+          list[i].id = i
+        }
+        var colors = app.globalData.ColorList;
         that.setData({
-          tixiList: res.data.data
+          list: list,
+          listCur: list[0],
+          colorArr: colors,
+          colorCount: colors.length
         })
       }
     })
@@ -35,11 +48,53 @@ Page({
    * 点击事件处理
    */
   tixiclick: function(event) {
-    var index = event.currentTarget.id
-    app.globalData.systemtypelist = that.data.tixiList[index].children
+    that = this;
+    var index = event.currentTarget.dataset.index;
+    var childrenindex = event.currentTarget.dataset.childrenindex;
+    app.globalData.systemtypelist = that.data.list[index].children
     wx.navigateTo({
-      url: '../systemlist/systemlist?title=' + that.data.tixiList[index].name,
+      url: '../systemlist/systemlist?title=' + that.data.list[index].name + '&childrenindex=' + childrenindex,
     })
+  },
+
+  tabSelect(e) {
+    this.setData({
+      TabCur: e.currentTarget.dataset.id,
+      MainCur: e.currentTarget.dataset.id,
+      VerticalNavTop: (e.currentTarget.dataset.id - 1) * 50
+    })
+  },
+
+  VerticalMain(e) {
+    let that = this;
+    let list = this.data.list;
+    let tabHeight = 0;
+    if (this.data.load) {
+      for (let i = 0; i < list.length; i++) {
+        let view = wx.createSelectorQuery().select("#main-" + list[i].id);
+        view.fields({
+          size: true
+        }, data => {
+          list[i].top = tabHeight;
+          tabHeight = tabHeight + data.height;
+          list[i].bottom = tabHeight;
+        }).exec();
+      }
+      that.setData({
+        load: false,
+        list: list
+      })
+    }
+    let scrollTop = e.detail.scrollTop + 20;
+    for (let i = 0; i < list.length; i++) {
+      if (scrollTop > list[i].top && scrollTop < list[i].bottom) {
+        that.setData({
+          VerticalNavTop: (list[i].id - 1) * 50,
+          TabCur: list[i].id
+        })
+        return false
+      }
+    }
   },
 
   /**

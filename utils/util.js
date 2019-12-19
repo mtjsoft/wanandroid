@@ -103,9 +103,26 @@ function post(url, data = {}) {
  * PUSH消息
  */
 function pushMsg(text, desp) {
+  var key = getDataByKey('sckey');
+  if (key == "") {
+    wx.showModal({
+      title: '设置Key',
+      content: '先设置有效的Server酱Key,才能推送连接',
+      success(res) {
+        if (res.confirm) {
+          wx.navigateTo({
+            url: '/pages/serverkey/serverkey',
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+    return
+  }
   wx.showLoading({})
   wx.request({
-    url: api.PushMSG + "SCU61997T591c6b79f920f1271bc3994f6cd4bb145d87816053f27.send",
+    url: api.PushMSG + key + ".send",
     data: {
       text: text,
       desp: desp
@@ -118,9 +135,18 @@ function pushMsg(text, desp) {
       wx.hideLoading()
       if (res.statusCode == 200) {
         //请求正常200
-        wx.showToast({
-          title: '微信消息推送成功!',
-        })
+        var data = res.data.data;
+        console.log(data)
+        if (data && data.errno == 0) {
+          wx.showToast({
+            title: '微信消息推送成功!',
+          })
+        } else {
+          wx.showToast({
+            title: '发送失败,请检查Server酱的Key',
+            icon: "none"
+          })
+        }
       } else {
         //请求失败
         wx.showToast({

@@ -1,5 +1,6 @@
 // pages/project/project.js
 const app = getApp()
+const util = require('../../utils/util.js');
 var that = this
 Page({
 
@@ -20,44 +21,7 @@ Page({
    */
   onLoad: function(options) {
     that = this
-    //that.projectType()
     that.getPagerData()
-  },
-
-  /**
-   * 获取项目分类
-   */
-  projectType: function() {
-    wx.showNavigationBarLoading()
-    wx.request({
-      url: app.globalData.baseUrl + '/project',
-      method: 'GET',
-      success: function(res) {
-        // 隐藏导航栏加载框
-        wx.hideNavigationBarLoading();
-        // 停止下拉动作
-        wx.stopPullDownRefresh();
-        var list = res.data.data
-        for (var i in list) {
-          if (i == 0) {
-            list[0].visible = 1
-          } else {
-            list[i].visible = 0
-          }
-          list[i].name = list[i].name.replace(/&amp;/g, "、")
-        }
-        that.setData({
-          typelist: list,
-          id: list[0].id
-        })
-      },
-      fail: function() {
-        // 隐藏导航栏加载框
-        wx.hideNavigationBarLoading();
-        // 停止下拉动作
-        wx.stopPullDownRefresh();
-      }
-    })
   },
 
   /**
@@ -102,47 +66,14 @@ Page({
   },
 
   /**
-   * 切换类型
-   */
-  choosetype: function(event) {
-    that = this; //不要漏了这句，很重要
-    var index = event.currentTarget.id;
-    var listtitle = that.data.typelist;
-    for (var i in listtitle) {
-      if (i == index) {
-        listtitle[i].visible = 1
-      } else {
-        listtitle[i].visible = 0
-      }
-    }
-    that.setData({
-      typelist: listtitle,
-      pagenumber: 1,
-      isRefresh: true,
-      id: listtitle[index].id
-    })
-    wx.setNavigationBarTitle({
-      title: that.data.typelist[index].name,
-    })
-
-    that.getPagerData()
-  },
-
-  /**
    * item点击事件
    */
   detail: function(event) {
     that = this; //不要漏了这句，很重要
-    var link = event.currentTarget.id
-    wx.setClipboardData({
-      data: link,
-      success: function(res) {
-        wx.showToast({
-          title: '已复制链接',
-          icon: 'success'
-        })
-      }
-    })
+    var index = event.currentTarget.dataset.index;
+    var title = that.data.pagerList[index].title;
+    var link = that.data.pagerList[index].link;
+    util.pushMsg(title, "[" + link + "](" + link + ")");
   },
 
   /**

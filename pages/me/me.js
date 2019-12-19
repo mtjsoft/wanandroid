@@ -18,17 +18,9 @@ Page({
   },
 
   /**
-   * 关于我们
-   */
-  about: function() {
-    wx.navigateTo({
-      url: '../about/about',
-    })
-  },
-  /**
    * 最新项目
    */
-  newproject: function () {
+  itemClick: function(e) {
     var islogin = wx.getStorageSync('username')
     if (islogin == null || islogin == "") {
       wx.showToast({
@@ -36,74 +28,56 @@ Page({
         icon: 'none'
       })
     } else {
-      wx.navigateTo({
-        url: '../project/project'
-      })
+      var type = parseInt(e.currentTarget.dataset.type);
+      var url = '';
+      switch (type) {
+        case 0:
+          url = '../serverkey/serverkey'
+          break
+        case 1:
+          url = '../project/project'
+          break
+        case 2:
+          url = '../mycollect/collect'
+          break
+        case 3:
+          url = '../todo/todo?type=add&username' + islogin
+          break
+        case 4:
+          url = '../notdo/notdo?username=' + islogin
+          break
+        case 5:
+          url = '../done/done?username=' + islogin
+          break
+      }
+      if (url != '') {
+        wx.navigateTo({
+          url: url
+        })
+      }
     }
   },
-  /**
-   * 我的收藏页面
-   */
-  mycollect: function() {
-    var islogin = wx.getStorageSync('username')
-    if (islogin == null || islogin == "") {
-      wx.showToast({
-        title: '请先登录',
-        icon: 'none'
-      })
-    } else {
-      wx.navigateTo({
-        url: '../mycollect/collect',
-      })
-    }
+
+  CopyLink(e) {
+    wx.setClipboardData({
+      data: e.currentTarget.dataset.link,
+      success: res => {
+        wx.showToast({
+          title: '已复制',
+          duration: 1000,
+        })
+      }
+    })
   },
+  
   /**
-   * 添加待办
+   * 赞赏支持
    */
-  addtodo: function () {
-    var islogin = wx.getStorageSync('username')
-    if (islogin == null || islogin == "") {
-      wx.showToast({
-        title: '请先登录',
-        icon: 'none'
-      })
-    } else {
-      wx.navigateTo({
-        url: '../todo/todo?type=add&username' + islogin,
-      })
-    }
-  },
-  /**
-   * 待办清单
-   */
-  notdo: function() {
-    var islogin = wx.getStorageSync('username')
-    if (islogin == null || islogin == "") {
-      wx.showToast({
-        title: '请先登录',
-        icon: 'none'
-      })
-    } else {
-      wx.navigateTo({
-        url: '../notdo/notdo?username=' + islogin,
-      })
-    }
-  },
-  /**
-   * 已完成清单
-   */
-  done: function() {
-    var islogin = wx.getStorageSync('username')
-    if (islogin == null || islogin == "") {
-      wx.showToast({
-        title: '请先登录',
-        icon: 'none'
-      })
-    } else {
-      wx.navigateTo({
-        url: '../done/done?username=' + islogin,
-      })
-    }
+  showQrcode() {
+    wx.previewImage({
+      urls: ['https://www.mtjsoft.cn/media/mtj/wx_zs.png'],
+      current: 'https://www.mtjsoft.cn/media/mtj/wx_zs.png' // 当前显示图片的http链接      
+    })
   },
 
   /**
@@ -177,6 +151,10 @@ Page({
       })
     }
   },
+
+  /**
+   * 获取等级，积分
+   */
 
   /**
    * 生命周期函数--监听页面隐藏

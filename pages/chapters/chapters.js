@@ -71,8 +71,9 @@ Page({
    */
   chaptersClick: function(event) {
     var id = event.currentTarget.id
+    var title = event.currentTarget.dataset.title;
     wx.navigateTo({
-      url: '../chapterslist/chapterslist?id=' + id,
+      url: '../chapterslist/chapterslist?id=' + id + '&title=' + title,
     })
   },
 

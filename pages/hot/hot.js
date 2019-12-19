@@ -11,9 +11,10 @@ Page({
   data: {
     // 随机颜色数组
     colorArr: ["#0000FF", "#008B00", "#FFC125", "#FF6A6A", "#FF1493", "#8A2BE2", "#EE1289", "#32CD32"],
-    items: [],
-    netaddress: [],
-    key: ''
+    items: null,
+    netaddress: null,
+    key: '',
+    offsetTop: 0
   },
 
   /**
@@ -21,6 +22,9 @@ Page({
    */
   onLoad: function(options) {
     that = this;
+    that.setData({
+      offsetTop: app.globalData.CustomBar
+    })
     that.gethotkey();
     that.getnetaddress();
   },
@@ -67,9 +71,8 @@ Page({
         icon: 'none'
       })
     } else {
-      app.globalData.key = that.data.key
       wx.navigateTo({
-        url: '../search/search',
+        url: '../search/search?key=' + that.data.key,
       })
     }
   },
@@ -79,10 +82,8 @@ Page({
   wehotkey: function(event) {
     that = this; //不要漏了这句，很重要
     var key = event.currentTarget.id
-    app.globalData.key = key
-    console.log(app.globalData.key)
     wx.navigateTo({
-      url: '../search/search',
+      url: '../search/search?key=' + key,
     })
   },
 

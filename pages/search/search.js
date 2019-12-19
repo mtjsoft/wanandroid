@@ -1,5 +1,6 @@
 // pages/search/search.js
 const app = getApp()
+const util = require('../../utils/util.js');
 var that = this
 Page({
 
@@ -8,10 +9,11 @@ Page({
    */
   data: {
     pagerList: [],
-    pagerTitles:[],
+    pagerTitles: [],
     pagenumber: 0,
     isloadmore: false,
-    isRefresh: false
+    isRefresh: false,
+    key: ''
   },
 
   /**
@@ -19,20 +21,24 @@ Page({
    */
   onLoad: function(options) {
     that = this
+    that.setData({
+      key: options.key
+    })
     wx.setNavigationBarTitle({
-      title: app.globalData.key,
+      title: options.key,
     })
     that.getPagerData()
   },
 
   getPagerData: function() {
+    that = this
     wx.showNavigationBarLoading()
     wx.request({
       url: app.globalData.baseUrl + '/query',
       method: 'POST',
       data: {
         pagernumber: that.data.pagenumber,
-        key: app.globalData.key
+        key: that.data.key
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded'
@@ -65,7 +71,7 @@ Page({
         }
         //取出标题中的html标签
         let titles = []
-        for (var i in that.data.pagerList){
+        for (var i in that.data.pagerList) {
           var title = that.data.pagerList[i].title
           //替换掉html标签,全局替换
           title = title.replace(/<[^>]+>/g, "")
@@ -94,16 +100,10 @@ Page({
    */
   detail: function(event) {
     that = this; //不要漏了这句，很重要
-    var link = event.currentTarget.id
-    wx.setClipboardData({
-      data: link,
-      success: function(res) {
-        wx.showToast({
-          title: '已复制链接',
-          icon: 'success'
-        })
-      }
-    })
+    var index = event.currentTarget.dataset.index;
+    var title = that.data.pagerList[index].title;
+    var link = that.data.pagerList[index].link;
+    util.pushMsg(title, "[" + link + "](" + link + ")");
   },
 
   /**
@@ -143,7 +143,7 @@ Page({
           header: {
             'content-type': 'application/x-www-form-urlencoded'
           },
-          success: function (res) {
+          success: function(res) {
             wx.hideLoading()
             console.log(res.data)
             if (res.data.errorCode != 0) {
@@ -170,10 +170,10 @@ Page({
                 }
               }
               app.globalData.collectids = appcollect
-              
+
             }
           },
-          fail: function () {
+          fail: function() {
             wx.hideLoading()
           }
         })
@@ -189,7 +189,7 @@ Page({
           header: {
             'content-type': 'application/x-www-form-urlencoded'
           },
-          success: function (res) {
+          success: function(res) {
             wx.hideLoading()
             console.log(res.data)
             if (res.data.errorCode != 0) {
@@ -212,7 +212,7 @@ Page({
               app.globalData.collectids.push(collectid)
             }
           },
-          fail: function () {
+          fail: function() {
             wx.hideLoading()
           }
         })

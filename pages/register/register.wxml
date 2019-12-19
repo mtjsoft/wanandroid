@@ -5,7 +5,12 @@
 </cu-custom>
 
 <view class='bg-white' style="background-color: #fff;">
-  <input class='input' style="margin-top: 15%;" placeholder='请输入用户名' bindinput='loginusername'></input>
-  <input class='input' placeholder='请输入密码' bindinput='loginpassword'></input>
+
+  <van-cell-group>
+    <van-field value="{{ username }}" required clearable label="用户名" placeholder="请输入用户名" bind:change="loginusername" />
+
+    <van-field value="{{ password }}" type="password" clearable label="密码" placeholder="请输入密码" required bind:change="loginpassword" />
+  </van-cell-group>
+
   <view class='loginbtu' bindtap='clickregister'>立即注册</view>
 </view>

@@ -7,9 +7,10 @@ Page({
    * 页面的初始数据
    */
   data: {
+    topTitle: '',
     pageType: 'add',
     username: '',
-    dates: '2018-8-14',
+    dates: '2019-12-12',
     index: 0,
     objectArray: ['重要', '工作', '学习', '生活'],
     title: '',
@@ -25,18 +26,14 @@ Page({
   onLoad: function(options) {
     that = this
     if (options.type == "add") {
-      wx.setNavigationBarTitle({
-        title: '添加待办事件',
-      })
       that.setData({
+        topTitle: '添加待办事件',
         username: options.username,
         pageType: options.type
       })
     } else {
-      wx.setNavigationBarTitle({
-        title: '编辑待办事件',
-      })
       that.setData({
+        topTitle: '编辑待办事件',
         pageType: options.type,
         username: options.username,
         title: options.title,
@@ -62,6 +59,7 @@ Page({
       index: e.detail.value
     })
   },
+
   //状态选择
   bindStatusChange: function(e) {
     this.setData({
@@ -71,13 +69,13 @@ Page({
 
   titleinput: function(e) {
     that.setData({
-      title: e.detail.value
+      title: e.detail
     })
   },
 
   descinput: function(e) {
     that.setData({
-      desc: e.detail.value
+      desc: e.detail
     })
   },
 

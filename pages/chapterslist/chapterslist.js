@@ -1,6 +1,6 @@
 // pages/chapterslist/chapterslist.js
-// pages/search/search.js
 const app = getApp()
+const util = require('../../utils/util.js');
 var that = this
 Page({
 
@@ -9,12 +9,14 @@ Page({
    */
   data: {
     id: '',
+    title: "公众号",
     key: '',
     pagerList: [],
     pagerTitles: [],
     pagenumber: 1,
     isloadmore: false,
-    isRefresh: false
+    isRefresh: false,
+    offsetTop: 0
   },
 
   /**
@@ -23,7 +25,9 @@ Page({
   onLoad: function(options) {
     that = this
     that.setData({
-      id: options.id
+      id: options.id,
+      offsetTop: app.globalData.CustomBar,
+      title: options.title
     })
     that.getPagerData()
   },
@@ -103,7 +107,7 @@ Page({
   keysou: function(e) {
     that = this; //不要漏了这句，很重要
     that.setData({
-      key: e.detail.value
+      key: e.detail
     })
   },
   /**
@@ -132,16 +136,10 @@ Page({
    */
   detail: function(event) {
     that = this; //不要漏了这句，很重要
-    var link = event.currentTarget.id
-    wx.setClipboardData({
-      data: link,
-      success: function(res) {
-        wx.showToast({
-          title: '已复制链接',
-          icon: 'success'
-        })
-      }
-    })
+    var index = event.currentTarget.dataset.index;
+    var title = that.data.pagerList[index].title;
+    var link = that.data.pagerList[index].link;
+    util.pushMsg(title, "[" + link + "](" + link + ")");
   },
 
   /**

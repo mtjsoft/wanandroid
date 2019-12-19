@@ -1,27 +1,29 @@
 <!--pages/chapterslist/chapterslist.wxml-->
 <cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
   <view slot="backText">返回</view>
-  <view slot="content">公众号</view>
+  <view slot="content">{{title}}</view>
 </cu-custom>
-
-<van-search value="{{ key }}" placeholder="请输入搜索关键词" use-action-slot bind:change="keysou" bind:search="keyclick">
-  <view slot="action" bind:tap="keyclick">搜索</view>
-</van-search>
+<!-- 搜索 -->
+<van-sticky offset-top="{{ offsetTop }}">
+  <van-search value="{{ key }}" placeholder="请输入搜索关键词" use-action-slot bind:change="keysou" bind:search="keyclick">
+    <view slot="action" bind:tap="keyclick">搜索</view>
+  </van-search>
+</van-sticky>
 
 <block wx:for="{{pagerList}}">
-  <view class='liststyle padding-xl radius shadow shadow-lg bg-white margin'>
-    <view class='listtop' id='{{item.link}}' bindtap='detail'>
+  <view class='liststyle padding-xl radius shadow shadow-lg bg-white margin' bindtap='detail' data-index='{{index}}'>
+    <view class='listtop'>
       <view>
         <image class='listtopimage' src='../../images/head.jpg'></image>
       </view>
       <view style='font-size: 12px;color: #646464;'>{{item.author}}</view>
       <view class='listtoptime'>{{item.niceDate}}</view>
     </view>
-    <text class='title' id='{{item.link}}' bindtap='detail'>{{pagerTitles[index]}}</text>
+    <text class='title'>{{pagerTitles[index]}}</text>
     <view class='listtop'>
-      <view class='chapterName' id='{{item.chapterId}}' bindtap='chapter'>{{item.chapterName}}</view>
-      <image wx:if="{{!item.collect}}" class='collect' src='../../images/img_collect.png' id='{{index}}' bindtap='collect'></image>
-      <image wx:if="{{item.collect}}" class='collect' src='../../images/img_collect_ed.png' id='{{index}}' bindtap='collect'></image>
+      <view class='chapterName' id='{{item.chapterId}}' catchtap='chapter'>{{item.chapterName}}</view>
+      <image wx:if="{{!item.collect}}" class='collect' src='../../images/img_collect.png' id='{{index}}' catchtap='collect'></image>
+      <image wx:if="{{item.collect}}" class='collect' src='../../images/img_collect_ed.png' id='{{index}}' catchtap='collect'></image>
     </view>
   </view>
 </block>

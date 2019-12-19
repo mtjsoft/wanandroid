@@ -5,18 +5,9 @@ page {
   background-color: #fff;
 }
 
-.input{
-  width: 70%;
-  margin-left: 15%;
-  border-bottom: solid 1px #39b54a;
-  color: #fff;
-  font-size: 14px;
-  margin-bottom: 20px;
-}
-
 .loginbtu{
-  width: 70%;
-  margin-left: 15%;
+  width: 80%;
+  margin-left: 10%;
   height: 80rpx;
   line-height: 80rpx;
   border-radius: 5px;
@@ -24,5 +15,6 @@ page {
   color: #fff;
   text-align: center;
   margin-top: 30px;
+  margin-bottom: 10px;
   font-size: 16px;
 }

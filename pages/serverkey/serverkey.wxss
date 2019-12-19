@@ -1,0 +1,4 @@
+/* pages/serverkey/serverkey.wxss */
+page {
+  background: #fff;
+}

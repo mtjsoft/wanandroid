@@ -1,0 +1,56 @@
+<!--pages/serverkey/serverkey.wxml-->
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">配置Server酱的Key</view>
+</cu-custom>
+
+<van-cell-group>
+  <van-field value="{{ sckey }}" center clearable label="SCKEY" placeholder="请输入SCKEY" border="{{ false }}" use-button-slot bind:change="onChange">
+    <van-button slot="button" size="small" type="primary" bind:click="saveKey">保存</van-button>
+  </van-field>
+</van-cell-group>
+
+<view class="cu-timeline margin-top">
+  <!--  -->
+  <view class="cu-item text-green">
+    <view class="bg-gradual-green content shadow">
+      <view class="cu-capsule radius">
+        <view class="cu-tag bg-white text-green">第一步</view>
+        <view class="cu-tag line-white">进入Server酱官网</view>
+      </view>
+      <view class="margin-top-sm text-content">
+        <view>1.打开浏览器</view>
+        <view>2.百度搜索“server酱官网”，或者打开官网地址：http://sc.ftqq.com/3.version</view>
+      </view>
+    </view>
+  </view>
+  <!--  -->
+  <view class="cu-item text-green">
+    <view class="bg-gradual-green content shadow">
+      <view class="cu-capsule radius">
+        <view class="cu-tag bg-white text-green">第二步</view>
+        <view class="cu-tag line-white">获取SCKEY</view>
+      </view>
+      <view class="margin-top-sm text-content">
+        <view>1.点击右上角的“登入”，GitHub账号一键登入（作为开发者，千万别说你没有GitHub账号！手动滑稽~~）</view>
+        <view>2.登入后，点击“微信推送”选项卡，扫码二维码即可完成微信绑定</view>
+        <view>3.完成绑定后，点击“发送信息”选项卡，即可看到您的SCKEY</view>
+      </view>
+    </view>
+  </view>
+  <!--  -->
+  <view class="cu-item text-green">
+    <view class="bg-gradual-green content shadow">
+      <view class="cu-capsule radius">
+        <view class="cu-tag bg-white text-green">第三步</view>
+        <view class="cu-tag line-white">保存SCKEY</view>
+      </view>
+      <view class="margin-top-sm text-content">
+        <view>1.将您获取到的SCKEY复制到上方输入框内，点击保存即可。</view>
+        <view>2.SCKEY是非常重要的，所以请妥善保存，不要随便告诉别人。另外同样内容的消息一分钟只能发送一次，服务器只保留一周的消息记录。</view>
+        <view>3.玩Android小程序只在本地缓存中保存SCKEY，所以请放心使用。</view>
+      </view>
+    </view>
+  </view>
+  <!--  -->
+</view>

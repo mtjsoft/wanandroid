@@ -25,7 +25,7 @@ Page({
    */
   loginusername: function(e) {
     this.setData({
-      username: e.detail.value
+      username: e.detail
     })
   },
 
@@ -34,7 +34,7 @@ Page({
    */
   loginpassword: function(e) {
     this.setData({
-      password: e.detail.value
+      password: e.detail
     })
   },
 

@@ -1,25 +1,27 @@
 <!--pages/done/done.wxml-->
-<view class="page">
-  <scroll-view scroll-x="true" style='width:100%;'>
-    <view class='toptyperow'>
-      <block wx:for="{{typelist}}">
-        <text wx:if="{{item.visible == 0}}" class='typetitleno' id='{{index}}' bindtap='choosetype'>{{item.name}}</text>
-        <text wx:if="{{item.visible == 1}}" class='typetitlese' id='{{index}}' bindtap='choosetype'>{{item.name}}</text>
-      </block>
-    </view>
-  </scroll-view>
-  <block wx:for="{{pagerList}}">
-    <view class='liststyle'>
-      <view class='toptypecolumn'>
-        <text class='title'>{{item.title}}</text>
-        <text class='desc'>{{item.content}}</text>
-        <text class='author'>设定时间：{{item.dateStr}} 完成时间：{{item.completeDateStr}}</text>
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">完成清单</view>
+</cu-custom>
 
-        <view class='bottomrow'>
-          <view class='delete' id='{{index}}' bindtap='deletetodo'>删除</view>
-          <view class='back' id='{{index}}' bindtap='backtodo'>还原</view>
-        </view>
+<van-sticky offset-top="{{ offsetTop }}">
+  <van-tabs active="{{ active }}" bind:change="onChange">
+    <block wx:for="{{typelist}}">
+      <van-tab title="{{item.name}}" name="{{item.name}}"></van-tab>
+    </block>
+  </van-tabs>
+</van-sticky>
+
+<block wx:for="{{pagerList}}">
+  <view class='liststyle padding-xl radius shadow shadow-lg bg-white margin'>
+    <view class='toptypecolumn'>
+      <text class='title'>{{item.title}}</text>
+      <text class='desc'>{{item.content}}</text>
+      <text class='author'>设定时间：{{item.dateStr}} 完成时间：{{item.completeDateStr}}</text>
+      <view class='bottomrow'>
+        <view class='delete' id='{{index}}' bindtap='deletetodo'>删除</view>
+        <view class='back' id='{{index}}' bindtap='backtodo'>还原</view>
       </view>
     </view>
-  </block>
-</view>
+  </view>
+</block>

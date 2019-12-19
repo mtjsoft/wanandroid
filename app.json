@@ -10,13 +10,13 @@
     "pages/mycollect/collect",
     "pages/systemlist/systemlist",
     "pages/about/about",
-    "pages/webview/webview",
     "pages/project/project",
     "pages/notdo/notdo",
     "pages/done/done",
     "pages/todo/todo",
     "pages/chapters/chapters",
-    "pages/chapterslist/chapterslist"
+    "pages/chapterslist/chapterslist",
+    "pages/serverkey/serverkey"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -75,7 +75,12 @@
     "van-search": "/dist/search/index",
     "van-loading": "/dist/loading/index",
     "van-tab": "/dist/tab/index",
-    "van-tabs": "/dist/tabs/index"
+    "van-tabs": "/dist/tabs/index",
+    "van-sticky": "/dist/sticky/index",
+    "van-field": "/dist/field/index",
+    "van-button": "/dist/button/index",
+    "van-cell": "/dist/cell/index",
+    "van-cell-group": "/dist/cell-group/index"
   },
   "debug": true,
   "sitemapLocation": "sitemap.json"

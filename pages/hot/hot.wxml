@@ -1,21 +1,31 @@
 <!--pages/hot/hot.wxml-->
-
-<cu-custom bgColor="bg-gradual-blue">
+<!-- 自定义导航栏 -->
+<cu-custom bgImage="https://www.mtjsoft.cn/media/wanandroid/hottopbg.jpg">
   <view slot="content">热搜</view>
 </cu-custom>
-
-<van-search value="{{ key }}" placeholder="请输入搜索关键词" use-action-slot bind:change="keysou" bind:search="keyclick">
-  <view slot="action" bind:tap="keyclick">搜索</view>
-</van-search>
-
-<view class='title'>大家都在搜</view>
+<!-- 搜索 -->
+<van-sticky offset-top="{{ offsetTop }}">
+  <van-search value="{{ key }}" placeholder="请输入搜索关键词" use-action-slot bind:change="keysou" bind:search="keyclick">
+    <view slot="action" bind:tap="keyclick">搜索</view>
+  </van-search>
+</van-sticky>
+<!-- 大家都在搜 -->
+<view class="cu-bar bg-white margin-top" wx:if="{{items}}">
+  <view class="action">
+    <text class="cuIcon-title text-blue"></text>大家都在搜
+  </view>
+</view>
 <view class='flexrow'>
   <block wx:for="{{items}}" wx:for-index="index">
     <view class='item' style='color:{{colorArr[index%8]}}' id='{{item.name}}' bindtap='wehotkey'>{{item.name}}</view>
   </block>
 </view>
-
-<view class='title'>常用网站</view>
+<!-- 常用网站 -->
+<view class="cu-bar bg-white margin-top" wx:if="{{netaddress}}">
+  <view class="action">
+    <text class="cuIcon-title text-blue"></text>常用网站
+  </view>
+</view>
 <view class='flexrow'>
   <block wx:for="{{netaddress}}" wx:for-index="index">
     <view class='item' style='color:{{colorArr[index%8]}}' data-index='{{index}}' bindtap='net'>{{item.name}}</view>

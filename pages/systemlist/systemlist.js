@@ -1,5 +1,6 @@
 // pages/systemlist/systemlist.js
 const app = getApp()
+const util = require('../../utils/util.js');
 var that = this
 Page({
 
@@ -7,12 +8,14 @@ Page({
    * 页面的初始数据
    */
   data: {
+    title: '体系',
     pagerList: [],
     pagenumber: 0,
     isloadmore: false,
     isRefresh: false,
     id: '',
-    typelist: []
+    typelist: [],
+    active: ''
   },
 
   /**
@@ -20,28 +23,23 @@ Page({
    */
   onLoad: function(options) {
     that = this
-    wx.setNavigationBarTitle({
-      title: options.title,
-    })
-    //根据visible，来设置是否选中的样式
     var listtitle = app.globalData.systemtypelist;
-    for(var i in listtitle){
-      if(i == 0){
-        listtitle[0].visible = 1
-      }else{
-        listtitle[i].visible = 0
-      }
-    }
+    // 选中的index
+    let index = parseInt(options.childrenindex);
     that.setData({
+      title: options.title,
       typelist: listtitle,
-      id: app.globalData.systemtypelist[0].id,
+      id: listtitle[index].id,
+      active: listtitle[index].name
     })
-
     that.getPagerData()
   },
 
   getPagerData: function() {
     wx.showNavigationBarLoading()
+    wx.showLoading({
+      title: '加载中...',
+    })
     wx.request({
       url: app.globalData.baseUrl + '/tree/list',
       method: 'GET',
@@ -50,6 +48,7 @@ Page({
         cid: that.data.id
       },
       success: function(res) {
+        wx.hideLoading()
         // 隐藏导航栏加载框
         wx.hideNavigationBarLoading();
         // 停止下拉动作
@@ -69,6 +68,7 @@ Page({
         }
       },
       fail: function() {
+        wx.hideLoading()
         // 隐藏导航栏加载框
         wx.hideNavigationBarLoading();
         // 停止下拉动作
@@ -80,25 +80,13 @@ Page({
   /**
    * 切换类型
    */
-  choosetype: function(event) {
-    that = this; //不要漏了这句，很重要
-    var index = event.currentTarget.id;
-    var listtitle = that.data.typelist;
-    for (var i in listtitle) {
-      if (i == index) {
-        listtitle[i].visible = 1
-      } else {
-        listtitle[i].visible = 0
-      }
-    }
+  onChange(event) {
+    var index = event.detail.index;
     that.setData({
-      typelist: listtitle,
       id: that.data.typelist[index].id,
+      active: event.detail.name,
       pagenumber: 0,
       isRefresh: true,
-    })
-    wx.setNavigationBarTitle({
-      title: that.data.typelist[index].name,
     })
     that.getPagerData()
   },
@@ -107,17 +95,11 @@ Page({
    * item点击事件
    */
   detail: function(event) {
-    that = this; //不要漏了这句，很重要
-    var link = event.currentTarget.id
-    wx.setClipboardData({
-      data: link,
-      success: function(res) {
-        wx.showToast({
-          title: '已复制链接',
-          icon: 'success'
-        })
-      }
-    })
+    that = this;
+    var index = event.currentTarget.dataset.index;
+    var title = that.data.pagerList[index].title;
+    var link = that.data.pagerList[index].link;
+    util.pushMsg(title, "[" + link + "](" + link + ")");
   },
 
   /**

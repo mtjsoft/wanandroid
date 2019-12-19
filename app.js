@@ -5,7 +5,7 @@ App({
     mainColor: "#1B82D1",
     //服务器地址
     baseUrl: "https://www.mtjsoft.cn/wanandroid/api",
-    //baseUrl: "http://192.168.31.21:8080/",
+    // baseUrl: "http://10.10.40.94:8080/wanandroid/api",
     //搜索关键词
     key: '',
     //收藏的列表ids

@@ -15,18 +15,16 @@ Page({
     isRefresh: false,
     id: '0',
     typelist: [{
-      name: '重要',
-      visible: '1'
+      name: '重要'
     }, {
-      name: '工作',
-      visible: '0'
+      name: '工作'
     }, {
-      name: '学习',
-      visible: '0'
+      name: '学习'
     }, {
-      name: '生活',
-      visible: '0'
-    }]
+      name: '生活'
+    }],
+    active: '重要',
+    offsetTop: 0
   },
 
   /**
@@ -34,9 +32,9 @@ Page({
    */
   onLoad: function(options) {
     that = this
-    that.data.username = options.username
-    wx.setNavigationBarTitle({
-      title: '待办清单',
+    that.setData({
+      offsetTop: app.globalData.CustomBar,
+      username: options.username
     })
     that.getPagerData()
   },
@@ -85,28 +83,17 @@ Page({
     })
   },
 
+
   /**
    * 切换类型
    */
-  choosetype: function(event) {
-    that = this; //不要漏了这句，很重要
-    var index = event.currentTarget.id;
-    var listtitle = that.data.typelist;
-    for (var i in listtitle) {
-      if (i == index) {
-        listtitle[i].visible = 1
-      } else {
-        listtitle[i].visible = 0
-      }
-    }
+  onChange(event) {
+    var index = event.detail.index;
     that.setData({
-      typelist: listtitle,
-      id: index,
+      id: index + '',
+      active: event.detail.name,
       pagenumber: 1,
       isRefresh: true,
-    })
-    wx.setNavigationBarTitle({
-      title: that.data.typelist[index].name,
     })
     that.getPagerData()
   },
@@ -133,12 +120,9 @@ Page({
             title: res.data.errorMsg,
           })
         } else {
-          let update = []
-          for (var i in that.data.pagerList) {
-            if (i != index) {
-              update.push(that.data.pagerList[i])
-            }
-          }
+          var update = that.data.pagerList;
+          // 删除
+          update.splice(index, 1);
           that.setData({
             pagerList: update
           })
@@ -175,12 +159,9 @@ Page({
             title: res.data.errorMsg,
           })
         } else {
-          let update = []
-          for (var i in that.data.pagerList) {
-            if (i != index) {
-              update.push(that.data.pagerList[i])
-            }
-          }
+          var update = that.data.pagerList;
+          // 删除
+          update.splice(index, 1);
           that.setData({
             pagerList: update
           })
@@ -200,7 +181,7 @@ Page({
   edittodo: function(event) {
     that = this; //不要漏了这句，很重要
     var index = event.currentTarget.id;
-    var model = that.data.pagerList[index]
+    var model = that.data.pagerList[index];
     wx.navigateTo({
       url: '../todo/todo?type=edit&username' + that.data.username + '&title=' + model.title + '&desc=' + model.content + '&dates=' + model.dateStr + '&index=' + model.type + '&status=' + model.status + '&id=' + model.id,
     })
@@ -217,7 +198,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    if(that.data.ishide){
+    if (that.data.ishide) {
       that.setData({
         ishide: false
       })

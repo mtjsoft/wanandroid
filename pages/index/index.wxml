@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<cu-custom bgImage="https://image.weilanwl.com/color2.0/plugin/cjkz2329.jpg">
+<cu-custom bgImage="https://www.mtjsoft.cn/media/wanandroid/indextopbg.jpg">
     <view slot="content">首页</view>
 </cu-custom>
 
@@ -21,9 +21,9 @@
       </view>
       <view class='title'>{{item.title}}</view>
       <view class='listtop'>
-        <view class='chapterName' id='{{item.chapterId}}' bindtap='chapter'>{{item.chapterName}}</view>
-        <image wx:if="{{item.collect}}" class='collect' src='/images/img_collect_ed.png' id='{{index}}' bindtap='collect'></image>
-        <image wx:else class='collect' src='/images/img_collect.png' id='{{index}}' bindtap='collect'></image>
+        <view class='chapterName' id='{{item.chapterId}}' catchtap='chapter'>{{item.chapterName}}</view>
+        <image wx:if="{{item.collect}}" class='collect' src='/images/img_collect_ed.png' id='{{index}}' catchtap='collect'></image>
+        <image wx:else class='collect' src='/images/img_collect.png' id='{{index}}' catchtap='collect'></image>
       </view>
     </view>
 </block>
