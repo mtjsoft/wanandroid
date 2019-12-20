@@ -2,21 +2,21 @@
 <view class="UCenter-bg">
   <image src="/images/head.jpg" class="png" style="border-radius: 50%;margin-bottom: 10rpx;" mode="widthFix" bindtap='login'></image>
   <view class="text-xl">{{username}}
-    <text class="text-df">v2.0</text>
+    <text class="text-df text-red" wx:if="{{myRank}}">Lv{{myRank.level}}</text>
   </view>
-  <view class="margin-top-sm">
-    <text>By:马腾蛟</text>
+  <view class="margin-top-sm" wx:if="{{myRank}}">
+    <text class="text-blue">排行:{{myRank.rank}}  积分:{{myRank.coinCount}}</text>
   </view>
   <image src="https://www.mtjsoft.cn/media/wanandroid/wave.gif" mode="scaleToFill" class="gif-wave"></image>
 </view>
 
 <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
 
-  <view class="cu-item arrow" bindtap='itemClick' data-type="0">
-    <view class="content">
+  <view class="cu-item arrow">
+    <navigator class="content" url="/pages/serverkey/serverkey" hover-class="none">
       <text class="cuIcon-settings text-grey"></text>
       <text class="text-grey">设置Server酱key</text>
-    </view>
+    </navigator>
   </view>
 
   <view class="cu-item arrow">
@@ -40,21 +40,21 @@
     </view>
   </view>
 
-  <view class="cu-item arrow" bindtap='itemClick' data-type="3">
+  <view class="cu-item arrow" bindtap='itemClick' data-type="3" wx:if="{{isShowToDo}}">
     <view class="content">
       <text class="cuIcon-addressbook text-orange"></text>
       <text class="text-grey">添加待办</text>
     </view>
   </view>
 
-  <view class="cu-item arrow" bindtap='itemClick' data-type="4">
+  <view class="cu-item arrow" bindtap='itemClick' data-type="4" wx:if="{{isShowToDo}}">
     <view class="content">
       <text class="cuIcon-form text-green"></text>
       <text class="text-grey">待办清单</text>
     </view>
   </view>
 
-  <view class="cu-item arrow" bindtap='itemClick' data-type="5">
+  <view class="cu-item arrow" bindtap='itemClick' data-type="5" wx:if="{{isShowToDo}}">
     <view class="content">
       <text class="cuIcon-activity text-red"></text>
       <text class="text-grey">完成清单</text>

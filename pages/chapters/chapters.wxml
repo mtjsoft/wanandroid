@@ -5,7 +5,7 @@
 
 <view class="grid col-3 padding-sm">
   <view class="padding-sm" wx:for="{{pagerList}}" wx:key>
-    <view class="bg-{{colorArr[index%colorCount].name}} padding radius text-center shadow-blur" id='{{item.id}}'  data-title="{{item.name}}" bindtap='chaptersClick'>
+    <view class="bg-{{colorArr[index%colorCount].name}} padding radius text-center shadow-blur" style="height:150rpx;" id='{{item.id}}'  data-title="{{item.name}}" bindtap='chaptersClick'>
       <view class="text-lg">{{item.name}}</view>
     </view>
   </view>

@@ -68,8 +68,11 @@ function request(url, data = {}, method = "GET") {
       success: function(res) {
         if (res.statusCode == 200) {
           //请求正常200
-          //正常
-          resolve(res.data);
+          if (res.data.errorCode == 0) {
+            resolve(res.data.data);
+          } else {
+            reject("失败" + res.data.errorMsg)
+          }
         } else if (res.statusCode == 401) {
           // token失效，需要重新换取token
         } else {

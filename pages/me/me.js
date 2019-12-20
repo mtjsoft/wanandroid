@@ -1,5 +1,7 @@
 // pages/me/me.js
 const app = getApp()
+const util = require('../../utils/util.js');
+const api = require('../../config/api.js');
 var that = this
 Page({
 
@@ -7,7 +9,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    username: '未登录'
+    username: '未登录',
+    myRank: null,
+    isShowToDo: false
   },
 
   /**
@@ -31,9 +35,6 @@ Page({
       var type = parseInt(e.currentTarget.dataset.type);
       var url = '';
       switch (type) {
-        case 0:
-          url = '../serverkey/serverkey'
-          break
         case 1:
           url = '../project/project'
           break
@@ -69,7 +70,7 @@ Page({
       }
     })
   },
-  
+
   /**
    * 赞赏支持
    */
@@ -106,7 +107,8 @@ Page({
       method: 'GET',
       success: function(res) {
         that.setData({
-          username: '未登录'
+          username: '未登录',
+          myRank: null
         })
         wx.setStorage({
           key: "username",
@@ -149,12 +151,36 @@ Page({
       that.setData({
         username: islogin
       })
+      that.getRankInfo()
     }
+    that.getIsShowToDo();
   },
 
   /**
    * 获取等级，积分
    */
+  getRankInfo: function() {
+    util.get(api.UserRank, {
+      username: that.data.username
+    }).then((res) => {
+      that.setData({
+        myRank: res
+      })
+    }).catch((errMsg) => {});
+  },
+
+
+  /**
+   * 是否显示TODO
+   */
+  getIsShowToDo: function() {
+    util.get(api.ShowToDo)
+      .then((res) => {
+        that.setData({
+          isShowToDo: res.isShowToDo
+        })
+      }).catch((errMsg) => {});
+  },
 
   /**
    * 生命周期函数--监听页面隐藏
