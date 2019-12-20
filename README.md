@@ -1,321 +1,46 @@
-# 1、小程序名称：玩androids
- 基于鸿洋大神的玩android开放API完成的《玩android》微信小程序版本，一起来学习小程序开发吧。
-# 2、小程序码：❤ 小程序已审核通过，上线了！！！扫码立即体验了。
-![小程序码](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/gh_de1f6e6fea7e_258.jpg)
-# 3、小程序完成情况说明：
- 目前文章详情，使用的是复制链接到剪切板。因为个人小程序不支持打开外部链接。本人也是很无奈啊。没办法，个人的小程序限制太多，如果可以的话，还是尽量搞一个企业账号玩玩吧！
-# 4、版本信息
- 1、因为个人小程序不支持打开外部链接，目前文章详情使用的是复制链接到剪切板。
- 2、修复因wanAndroid网站升级https域名接口无法访问到数据的问题。
-# 5、小程序界面
-![首页](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/%E9%A6%96%E9%A1%B5.png)     ![热搜](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/%E7%83%AD%E6%90%9C.png)
-![体系](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/%E4%BD%93%E7%B3%BB.png)     ![公众号](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/%E5%85%AC%E4%BC%97%E5%8F%B7.png) 
-![我的](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/%E6%88%91%E7%9A%84.png)     ![文章列表](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/%E6%96%87%E7%AB%A0%E5%88%97%E8%A1%A8.png)     
-![登录](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/%E7%99%BB%E5%BD%95.png)
+## 玩Android小程序v2.0，做最漂亮的应用
+相较第一个版本，做了两个非常重要的更新：
 
-## 建了一个公众号，大家一起交流一下吧。
-![公众号](https://github.com/mtjsoft/wanandroid/blob/master/img-folder/wx.jpg)
+ 1. 界面的优化，使用了[ColorUi](https://www.color-ui.com/)、[Vant-weapp](https://youzan.github.io/vant-weapp/#/intro)框架，使界面更美观、漂亮。力争做最好用、最漂亮的玩Android小程序。
+ 2. 使用“[Server酱](http://sc.ftqq.com/3.version)”进行微信绑定消息推送，实现了文章详情的查看。Server酱的key需要配置，后面会说明。
 
-# 6、小程序上线接口(wanAndroid网站已全面升级https，所以可以直接使用其接口，用下面的接口也可以)：
-由于小程序上线必须要求服务器域名只支持https协议，所以我将玩android的api数据在我本人的服务器上转发了一下。
-```
-/**========================================1.首页相关
+## 先睹为快
+![首页](https://img-blog.csdnimg.cn/20191220150442964.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI4Nzc5MDgz,size_16,color_FFFFFF,t_70)            ![热搜](https://img-blog.csdnimg.cn/2019122015051390.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI4Nzc5MDgz,size_16,color_FFFFFF,t_70)
+![体系](https://img-blog.csdnimg.cn/20191220150701565.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI4Nzc5MDgz,size_16,color_FFFFFF,t_70)       ![公众号](https://img-blog.csdnimg.cn/20191220150743343.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI4Nzc5MDgz,size_16,color_FFFFFF,t_70)
+![我的](https://img-blog.csdnimg.cn/20191220150809750.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI4Nzc5MDgz,size_16,color_FFFFFF,t_70) ![绑定key](https://img-blog.csdnimg.cn/2019122015083426.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI4Nzc5MDgz,size_16,color_FFFFFF,t_70)
+怎么样？是不是有累味了？O(∩_∩)O 赶紧扫码使用吧！
+![小程序码](https://img-blog.csdnimg.cn/20191220163317190.jpg)
+## Server酱配置
 
-=================================================================**/
-    /**
-     * 首页文章列表
-     * Get
-     * https://www.mtjsoft.cn/wanandroid/api/article/list
-     * @param pagernumber 方法：GET
-     *                    参数：页码，从0开始。
-     * 
-     */
+ 1. 点击打开[Server酱 http://sc.ftqq.com/3.version](http://sc.ftqq.com/3.version)官网
+ 2. 点击右上角的“登入”，GitHub账号一键登入（作为开发者，千万别说你没有GitHub账号！手动滑稽~~）
+ 3. 点击“微信推送”选项卡，微信扫码二维码即可完成微信绑定
+ 4. 点击“发送信息”选项卡，即可看到您的SCKEY
+ 5. 将您获取到的SCKEY复制到小程序绑定界面输入框内，点击保存即可。
+ 
+ *SCKEY是非常重要的，所以请妥善保存，不要随便告诉别人。另外**同样内容的消息一分钟只能发送一次**，服务器只保留一周的消息记录。*
+
+配置好以后，就可以愉快的查看文章详情啦！
+
+ ***玩Android小程序只在本地缓存中保存SCKEY，所以请放心使用。***
 
 
-    /**
-     * 首页banner
-     * Get
-     * https://www.mtjsoft.cn/wanandroid/api/banner
-     * 
-     * 
-     */
-    
+## 关于
 
-    /**
-     * 常用网站
-     * Get
-     * https://www.mtjsoft.cn/wanandroid/api/friend
-     * 
-     */
+ - 该项目是我个人基于鸿洋大神的玩android开放API开发的一款高颜值的微信小程序。这个项目拥有漂亮的界面和实用的功能。如果你有一些更好的想法或建议，可以在[GitHub](https://github.com/mtjsoft/wanandroid)里提交给我，我很欢迎大家一起维护。
+ - 该项目使用了ColorUI组件库！在此非常感谢该开源库的作者‘文晓港’。同时也使用了部分有赞的开源库vant-weapp，在此表示感谢！当然也要感谢鸿洋大神提供的玩android开放API。
 
-    /**
-     * 搜索热词
-     * Get
-     * https://www.mtjsoft.cn/wanandroid/api/hotkey
-     * 
-     * 
-     */
+ - 项目是开源的，不收取任何费用，如果这个项目有帮到你，或者你觉得很赞，可以赞赏支持一下！
+![赞赏](https://img-blog.csdnimg.cn/20191220171453721.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI4Nzc5MDgz,size_16,color_FFFFFF,t_70)
+ - 有什么问题也可以直接加我个人微信，记得备注一下！  
 
-    /**========================================2.体系
+![微信](https://img-blog.csdnimg.cn/20191220171528845.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI4Nzc5MDgz,size_16,color_FFFFFF,t_70)
 
-=================================================================**/
+## 发现任何问题，记得过来提哦~ [issues](https://github.com/mtjsoft/wanandroid/issues)尽可能给我star,好让我ZB ~
 
-    /**
-     * 体系数据 
-     * Get
-     * https://www.mtjsoft.cn/wanandroid/api/tree
-     * 
-     * 
-     */
+## [swagger接口文档点击这里查看](https://www.mtjsoft.cn/swagger-ui.html#/%E7%8E%A9android%E5%BC%80%E6%94%BEapi)
+![swagger接口](https://img-blog.csdnimg.cn/20191220173443486.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI4Nzc5MDgz,size_16,color_FFFFFF,t_70)
 
-    /**
-     * 知识体系下的文章
-     * GET
-     * https://www.mtjsoft.cn/wanandroid/api/tree/list
-     * @param pagernumber 方法：GET
-     *                    页码：从0开始。
-     * @param cid  分类的id，上述二级目录的id
-     * 
-     */
-
-    /**========================================3.导航
-
-=================================================================**/
-    /**
-     * 导航数据
-     * Get
-     * https://www.mtjsoft.cn/wanandroid/api/navi
-     * 
-     */
-
-    /**========================================4.项目
-
-=================================================================**/
-    /**
-     * 项目分类  GET
-     * https://www.mtjsoft.cn/wanandroid/api/project
-     * 
-     */
-
-    /**
-     * 项目列表数据 GET
-     * https://www.mtjsoft.cn/wanandroid/api/project/list
-     * @param pagernumber 方法：GET
-     *                    页码：从1开始。
-     * @param cid  分类的id，上面项目分类接口
-     */
-
-    /**========================================5. 登录与注册
-
-=================================================================**/
-
-    /**
-     * 登录 POST
-     * https://www.mtjsoft.cn/wanandroid/api/login
-     * @param username 用户名
-     * @param password 密码
-     */
-    
-
-    /**
-     * 退出登录 Get
-     * https://www.mtjsoft.cn/wanandroid/api/loginout
-     * @param username 用户名
-     */
-
-
-    /**
-     * 注册 POST
-     * https://www.mtjsoft.cn/wanandroid/api/register
-     * @param username   
-     * @param password
-     * @param repassword
-     */
-
-    /**========================================6. 收藏
-
-=================================================================**/
-    /**
-     * 收藏的文章列表 GET
-     * https://www.mtjsoft.cn/wanandroid/api/collect/list
-     * @param pagernumber 方法：GET
-     *                    参数： 页码：从0开始。
-     * @param username 用户名
-     */
-
-    /**
-     * 收藏站内文章 POST
-     * https://www.mtjsoft.cn/wanandroid/api/collect
-     * @param id 文章id，为需要收藏的id.
-     * @param username 用户名
-     */
-
-    /**
-     * 从文章列表取消收藏 POST 
-     * https://www.mtjsoft.cn/wanandroid/api/uncollectoriginId
-     * @param id 
-     * @param username 用户名
-     */
-
-
-    /**
-     * 从我的收藏页面取消收藏 POST
-     * https://www.mtjsoft.cn/wanandroid/api/uncollect
-     * @param username 用户名
-     * @param id 
-     * @param originId:列表页下发，无则为-1
-     *        originId 代表的是你收藏之前的那篇文章本身的id； 但是收藏支持主动添加，这种情况下，没有
-
-originId则为-1
-     */
-
-    /**========================================7.搜索
-
-=================================================================**/
-    /**
-     * 搜索 POST
-     * https://www.mtjsoft.cn/wanandroid/api/query
-     * @param key         key： 搜索关键词
-     *                    注意：支持多个关键词，用空格隔开
-     * @param pagernumber 页码：从0开始。
-     */
-    
-
-    
-
-/**========================================8.HTML=========================================================
-
-========**/
-    /**
-     * 获取html Get
-     * https://www.mtjsoft.cn/wanandroid/api/html
-     * @param link 链接
-     */
-
-
-    /**========================================9.TODO工具
-
-=================================================================**/
-    /**
-     * TODO列表 Get
-     * https://www.mtjsoft.cn/wanandroid/api/todo/list
-     * @param typename 目前支持0,1,2,3
-     * @param username 用户名
-     */
-
-
-    /** 
-     * 新增一条Todo  POST
-     * https://www.mtjsoft.cn/wanandroid/api/todo/add
-     * @param typename 方法：POST
-     *                 参数：
-     *                 title: 新增标题
-     *                 content: 新增详情
-     *                 date: 2018-08-01
-     *                 typename: 目前支持0,1,2,3
-     * @param title
-     * @param content
-     * @param date
-     * @param username
-     */
-    
-
-    /**
-     * 更新一条Todo内容 POST
-     * https://www.mtjsoft.cn/wanandroid/api/todo/update
-     * @param id
-     * @param typename
-     * @param title
-     * @param content
-     * @param date
-     * @param status
-     * @param username 方法：POST
-     *                 参数：
-     *                 id: 拼接在链接上，为唯一标识
-     *                 title: 更新标题
-     *                 content: 新增详情
-     *                 date: 2018-08-01
-     *                 status: 0 // 0为未完成，1为完成
-     *                 typename: 目前支持0,1,2,3
-     */
-    
-
-    /**
-     * 删除一条Todo  POST
-     * https://www.mtjsoft.cn/wanandroid/api/todo/delete
-     * @param id
-     * @param username 方法：POST
-     *                 参数：
-     *                 id: 为唯一标识
-     */
-
-
-    /**
-     * 仅更新完成状态Todo POST
-     * https://www.mtjsoft.cn/wanandroid/api/todo/done
-     * @param id
-     * @param status
-     * @param username 方法：POST
-     *                 参数：
-     *                 id: 拼接在链接上，为唯一标识
-     *                 status: 0或1，传1代表未完成到已完成，反之则反之。
-     */
-    
-
-    /**
-     * 未完成Todo列表 POST
-     * https://www.mtjsoft.cn/wanandroid/api/todo/listnotdo
-     * @param typename
-     * @param pagernumber
-     * @param username    方法：POST
-     *                    参数：
-     *                    typename：目前支持0,1,2,3
-     *                    pagernumber页码: 从1开始；
-     */
-
-
-    /**
-     * 已完成Todo列表 POST
-     * https://www.mtjsoft.cn/wanandroid/api/todo/listdone
-     * @param typename
-     * @param pagernumber
-     * @param username    方法：POST
-     *                    参数：
-     *                    typename：目前支持0,1,2,3
-     *                    pagernumber: 从1开始；
-     * 
-     */
-   
-
-    /**
-     * 获取公众号列表 GET
-     * https://www.mtjsoft.cn/wanandroid/api/wxarticle/chapters
-     * @param username
-     */
-    
-
-    /**
-     * 查看某个公众号历史数据 GET
-     * https://www.mtjsoft.cn/wanandroid/api/wxarticle/list
-     * @param username
-     * @param id
-     * @param pager    方法：GET 参数：
-     *                 公众号 id：eg:405
-     *                 公众号页码pager：eg:1
-     */
-    
-
-    /**
-     * 在某个公众号中搜索历史文章 GET
-     * https://www.mtjsoft.cn/wanandroid/api/wxarticle/list/key
-     * @param username
-     * @param id
-     * @param pager
-     * @param k        方法：GET
-     *                 参数：
-     *                 公众号 id：eg:405
-     *                 公众号页码pager：eg:1
-     *                 k:关键词
-     */
-}
-```
+> 感谢 [ColorUi](https://www.color-ui.com/)
+> 感谢 [Vant-weapp](https://youzan.github.io/vant-weapp/#/intro)
+> 感谢 [玩Android](https://www.wanandroid.com/index)
