@@ -138,15 +138,15 @@ function pushMsg(text, desp) {
       wx.hideLoading()
       if (res.statusCode == 200) {
         //请求正常200
-        var data = res.data.data;
-        console.log(data)
-        if (data && data.errno == 0) {
+        console.log(res.data)
+        var data = res.data;
+        if (data.errno == 0) {
           wx.showToast({
             title: '微信消息推送成功!',
           })
         } else {
           wx.showToast({
-            title: '发送失败,请检查Server酱的Key',
+            title: data.errmsg,
             icon: "none"
           })
         }
