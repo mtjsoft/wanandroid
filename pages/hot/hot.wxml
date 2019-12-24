@@ -20,6 +20,8 @@
     <view class='item' style='color:{{colorArr[index%8]}}' id='{{item.name}}' bindtap='wehotkey'>{{item.name}}</view>
   </block>
 </view>
+<!-- 格子广告 -->
+<ad unit-id="adunit-44cf0967a6d6c6b0" ad-type="grid" grid-opacity="0.8" grid-count="5" ad-theme="white"></ad>
 <!-- 常用网站 -->
 <view class="cu-bar bg-white margin-top" wx:if="{{netaddress}}">
   <view class="action">

@@ -20,6 +20,10 @@
       <image wx:if="{{item.collect}}" class='collect' src='../../images/img_collect_ed.png' id='{{index}}' catchtap='collect'></image>
     </view>
   </view>
+  <!-- 广告 -->
+  <view wx:if="{{(index + 1)%15 == 0}}" class="shadow shadow-lg bg-white margin">
+    <ad unit-id="adunit-578f8cf53bbe0c70" ad-type="video" ad-theme="white"></ad>
+  </view>
 </block>
 <view class="loadmore">
   <van-loading size="24px">加载中...</van-loading>

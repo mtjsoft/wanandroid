@@ -86,7 +86,10 @@ Page({
    */
   imageClick: function(event) {
     that = this; //不要漏了这句，很重要
-    var url = event.currentTarget.id
+    var index = event.currentTarget.dataset.index;
+    var title = that.data.pagerList[index].title;
+    var link = that.data.pagerList[index].url;
+    util.pushMsg(title, "[" + link + "](" + link + ")");
   },
   /**
    * item点击事件

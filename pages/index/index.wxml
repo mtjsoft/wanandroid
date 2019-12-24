@@ -1,31 +1,38 @@
 <!--index.wxml-->
 <cu-custom bgImage="https://www.mtjsoft.cn/media/wanandroid/indextopbg.jpg">
-    <view slot="content">首页</view>
+  <view slot="content">首页</view>
 </cu-custom>
 
 <swiper class="card-swiper square-dot" indicator-dots="true" indicator-color='#1B82D1' indicator-active-color='#f00' autoplay='true' circular='true' interval='3000' duration='500' bindchange="cardSwiper">
   <swiper-item wx:for="{{banner}}" wx:key class="{{cardCur==index?'cur':''}}">
-    <view class="swiper-item">
-      <image class='imageBener' mode="aspectFill" src="{{item.imagePath}}" id='{{item.url}}' bindtap='imageClick'></image>
+    <view class="swiper-item shadow" bindtap='imageClick' data-index='{{index}}'>
+      <image class='imageBener' mode="aspectFill" src="{{item.imagePath}}"></image>
     </view>
   </swiper-item>
 </swiper>
 
+<!-- 格子广告 -->
+<ad unit-id="adunit-44cf0967a6d6c6b0" ad-type="grid" grid-opacity="0.8" grid-count="5" ad-theme="white"></ad>
+
+<!-- 实际内容 -->
 <block wx:for="{{pagerList}}">
-  <!-- 实际内容 -->
-    <view class='liststyle padding-xl radius shadow shadow-lg bg-white margin' bindtap='detail' data-index='{{index}}'>
-      <view class='listtop'>
-        <image class='listtopimage' src='/images/head.jpg'></image>
-        <view style='font-size: 12px;color: #646464;'>{{item.author}}</view>
-        <view class='listtoptime'>{{item.niceDate}}</view>
-      </view>
-      <view class='title'>{{item.title}}</view>
-      <view class='listtop'>
-        <view class='chapterName' id='{{item.chapterId}}' catchtap='chapter'>{{item.chapterName}}</view>
-        <image wx:if="{{item.collect}}" class='collect' src='/images/img_collect_ed.png' id='{{index}}' catchtap='collect'></image>
-        <image wx:else class='collect' src='/images/img_collect.png' id='{{index}}' catchtap='collect'></image>
-      </view>
+  <view class='liststyle padding-xl radius shadow shadow-lg bg-white margin' bindtap='detail' data-index='{{index}}'>
+    <view class='listtop'>
+      <image class='listtopimage' src='/images/head.jpg'></image>
+      <view style='font-size: 12px;color: #646464;'>{{item.author}}</view>
+      <view class='listtoptime'>{{item.niceDate}}</view>
     </view>
+    <view class='title'>{{item.title}}</view>
+    <view class='listtop'>
+      <view class='chapterName' id='{{item.chapterId}}' catchtap='chapter'>{{item.chapterName}}</view>
+      <image wx:if="{{item.collect}}" class='collect' src='/images/img_collect_ed.png' id='{{index}}' catchtap='collect'></image>
+      <image wx:else class='collect' src='/images/img_collect.png' id='{{index}}' catchtap='collect'></image>
+    </view>
+  </view>
+  <!-- 广告 -->
+  <view wx:if="{{(index + 1)%15 == 0}}" class="shadow shadow-lg bg-white margin">
+    <ad unit-id="adunit-578f8cf53bbe0c70" ad-type="video" ad-theme="white"></ad>
+  </view>
 </block>
 
 <view class="loadmore">
