@@ -17,7 +17,7 @@
 
   <!-- 广告 -->
   <view wx:if="{{(index + 1)%15 == 0}}" class="shadow shadow-lg bg-white margin">
-    <ad unit-id="adunit-578f8cf53bbe0c70" ad-type="video" ad-theme="white"></ad>
+    <ad unit-id="adunit-5f846b4a3aef8538" ad-type="video" ad-theme="white"></ad>
   </view>
 </block>
 
