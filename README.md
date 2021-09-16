@@ -38,9 +38,6 @@
 
 ## 发现任何问题，记得过来提哦~ [issues](https://github.com/mtjsoft/wanandroid/issues)尽可能给我star,好让我ZB ~
 
-## [swagger接口文档点击这里查看](https://www.mtjsoft.cn/swagger-ui.html#/%E7%8E%A9android%E5%BC%80%E6%94%BEapi)
-![swagger接口](https://img-blog.csdnimg.cn/20191220173443486.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI4Nzc5MDgz,size_16,color_FFFFFF,t_70)
-
 > 感谢 [ColorUi](https://www.color-ui.com/)
 > 感谢 [Vant-weapp](https://youzan.github.io/vant-weapp/#/intro)
 > 感谢 [玩Android](https://www.wanandroid.com/index)
