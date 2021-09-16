@@ -26,3 +26,7 @@
     </view>
   </view>
 </block>
+
+<view class="loadmore" wx:if="{{isloadmore}}">
+	<van-loading size="24px">加载中...</van-loading>
+</view>

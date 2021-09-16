@@ -13,7 +13,7 @@
       <view style='font-size: 12px;color: #646464;'>{{item.author}}</view>
       <view class='listtoptime'>{{item.niceDate}}</view>
     </view>
-    <text class='title'>{{pagerTitles[index]}}</text>
+    <text class='title'>{{item.title}}</text>
     <view class='listtop'>
       <view class='chapterName' id='{{item.chapterId}}' catchtap='chapter'>{{item.chapterName}}</view>
       <image wx:if="{{!item.collect}}" class='collect' src='../../images/img_collect.png' id='{{index}}' catchtap='collect'></image>
@@ -25,6 +25,6 @@
     <ad unit-id="adunit-79891d90c43567ab" ad-type="video" ad-theme="white"></ad>
   </view>
 </block>
-<view class="loadmore">
+<view class="loadmore" wx:if="{{isloadmore}}">
   <van-loading size="24px">加载中...</van-loading>
 </view>

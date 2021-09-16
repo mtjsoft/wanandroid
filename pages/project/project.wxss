@@ -43,7 +43,13 @@
 }
 
 .author {
+  flex: 1;
   margin-top: 5px;
   font-size: 14px;
   color: rgb(51, 49, 49);
+}
+
+.collect{
+  width: 44rpx;
+  height: 44rpx;
 }

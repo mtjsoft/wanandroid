@@ -11,21 +11,21 @@ Page({
   data: {
     username: '未登录',
     myRank: null,
-    isShowToDo: false
+    isShowToDo: true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     that = this
   },
 
   /**
    * 最新项目
    */
-  itemClick: function(e) {
-    var islogin = wx.getStorageSync('username')
+  itemClick: function (e) {
+    var islogin = util.getNickName()
     if (islogin == null || islogin == "") {
       wx.showToast({
         title: '请先登录',
@@ -84,8 +84,8 @@ Page({
   /**
    * 是否登录，未登录跳转登录
    */
-  login: function() {
-    var islogin = wx.getStorageSync('username')
+  login: function () {
+    var islogin = util.getNickName()
     if (islogin == null || islogin == '') {
       wx.navigateTo({
         url: '../login/login',
@@ -101,17 +101,19 @@ Page({
   /**
    * 退出登陆
    */
-  loginout: function() {
-    wx.request({
-      url: app.globalData.baseUrl + '/loginout?username=' + that.data.username,
-      method: 'GET',
-      success: function(res) {
+  loginout: function () {
+    util.get(api.logout)
+      .then((res) => {
         that.setData({
           username: '未登录',
           myRank: null
         })
         wx.setStorage({
-          key: "username",
+          key: "sessionid",
+          data: ''
+        })
+        wx.setStorage({
+          key: "nickname",
           data: ''
         })
         wx.setStorage({
@@ -127,22 +129,27 @@ Page({
           icon: 'success',
           duration: 200
         })
-      }
-    })
+      }).catch((errMsg) => {
+        wx.showToast({
+          title: errMsg,
+          icon: 'none',
+          duration: 200
+        })
+      });
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
-    var islogin = wx.getStorageSync('username')
+  onShow: function () {
+    var islogin = util.getNickName()
     if (islogin == null || islogin == '') {
       that.setData({
         username: '未登录'
@@ -153,16 +160,14 @@ Page({
       })
       that.getRankInfo()
     }
-    that.getIsShowToDo();
+    // that.getIsShowToDo();
   },
 
   /**
    * 获取等级，积分
    */
-  getRankInfo: function() {
-    util.get(api.UserRank, {
-      username: that.data.username
-    }).then((res) => {
+  getRankInfo: function () {
+    util.get(api.UserRank).then((res) => {
       that.setData({
         myRank: res
       })
@@ -173,7 +178,7 @@ Page({
   /**
    * 是否显示TODO
    */
-  getIsShowToDo: function() {
+  getIsShowToDo: function () {
     util.get(api.ShowToDo)
       .then((res) => {
         that.setData({
@@ -185,35 +190,35 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   }
 })

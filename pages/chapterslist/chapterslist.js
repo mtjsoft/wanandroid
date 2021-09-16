@@ -1,6 +1,7 @@
 // pages/chapterslist/chapterslist.js
 const app = getApp()
 const util = require('../../utils/util.js');
+const api = require('../../config/api.js');
 var that = this
 Page({
 
@@ -16,13 +17,14 @@ Page({
     pagenumber: 1,
     isloadmore: false,
     isRefresh: false,
-    offsetTop: 0
+    offsetTop: 0,
+    total: 0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     that = this
     that.setData({
       id: options.id,
@@ -32,79 +34,60 @@ Page({
     that.getPagerData()
   },
 
-  getPagerData: function() {
+  getPagerData: function () {
     wx.showNavigationBarLoading()
-    var myurl = app.globalData.baseUrl + '/wxarticle/list/key'
-    if (that.data.key == '') {
-      myurl = app.globalData.baseUrl + '/wxarticle/list'
+    var myurl = api.chaptersList.replace("$1", that.data.id).replace("$2", that.data.pagenumber)
+    if (that.data.key != '') {
+      myurl = myurl + '?k=' + that.data.key
     }
-    wx.request({
-      url: myurl,
-      method: 'GET',
-      data: {
-        pager: that.data.pagenumber,
-        k: that.data.key,
-        id: that.data.id
-      },
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      success: function(res) {
+    util.get(myurl)
+      .then((res) => {
         // 隐藏导航栏加载框
         wx.hideNavigationBarLoading();
         // 停止下拉动作
         wx.stopPullDownRefresh();
-        var list = res.data.data.datas
-        var collectids = app.globalData.collectids
+        var list = res.datas
         for (var i in list) {
-          for (var j in collectids) {
-            if (list[i].id == collectids[j]) {
-              list[i].collect = true
-            }
-          }
-        }
-        if (that.data.isRefresh) {
-          that.setData({
-            pagerList: list,
-            isRefresh: false
-          })
-        } else {
-          var templist = that.data.pagerList
-          var resultlist = templist.concat(list)
-          that.setData({
-            pagerList: resultlist
-          })
-        }
-        //取出标题中的html标签
-        let titles = []
-        for (var i in that.data.pagerList) {
-          var title = that.data.pagerList[i].title
+          var title = list[i].title
           //替换掉html标签,全局替换
           title = title.replace(/<[^>]+>/g, "")
           //替换汉字符号,全局替换
           title = title.replace(/&amp;/g, "、")
           title = title.replace(/&mdash;/g, "-")
+          title = title.replace(/&ne;/g, "-")
+          title = title.replace(/&ne;/g, "")
+          title = title.replace(/&rdquo;/g, "")
+          title = title.replace(/&ldquo;/g, "")
           //将替换过的标题添加到新数组
-          titles.push(title)
+          list[i].title = title
         }
-        //将新标题数组给标题显示
-        that.setData({
-          pagerTitles: titles
-        })
-      },
-      fail: function() {
+        if (that.data.isRefresh) {
+          that.setData({
+            pagerList: list,
+            total: res.total,
+            isRefresh: false,
+            isloadmore: list.length < res.total
+          })
+        } else {
+          var templist = that.data.pagerList
+          var resultlist = templist.concat(list)
+          that.setData({
+            pagerList: resultlist,
+            isloadmore: resultlist.length < res.total
+          })
+        }
+      }).catch((errMsg) => {
         // 隐藏导航栏加载框
         wx.hideNavigationBarLoading();
         // 停止下拉动作
         wx.stopPullDownRefresh();
-      }
-    })
+      });
   },
 
   /**
    * 搜索的输入框关键词
    */
-  keysou: function(e) {
+  keysou: function (e) {
     that = this; //不要漏了这句，很重要
     that.setData({
       key: e.detail
@@ -113,7 +96,7 @@ Page({
   /**
    * 点击搜索
    */
-  keyclick: function() {
+  keyclick: function () {
     that = this; //不要漏了这句，很重要
     if (that.data.key == '') {
       wx.showToast({
@@ -134,7 +117,7 @@ Page({
   /**
    * item点击事件
    */
-  detail: function(event) {
+  detail: function (event) {
     that = this; //不要漏了这句，很重要
     var index = event.currentTarget.dataset.index;
     var title = that.data.pagerList[index].title;
@@ -145,7 +128,7 @@ Page({
   /**
    * 类别点击
    */
-  chapter: function(event) {
+  chapter: function (event) {
     that = this; //不要漏了这句，很重要
     var link = event.currentTarget.id
   },
@@ -153,9 +136,9 @@ Page({
   /**
    * 收藏/取消收藏
    */
-  collect: function(event) {
+  collect: function (event) {
     that = this; //不要漏了这句，很重要
-    var islogin = wx.getStorageSync('username')
+    var islogin = util.getNickName()
     if (islogin == null || islogin == "") {
       wx.showToast({
         title: '请先登录',
@@ -169,89 +152,40 @@ Page({
       })
       //如果已收藏，就取消收藏
       if (that.data.pagerList[postion].collect) {
-        wx.request({
-          url: app.globalData.baseUrl + '/uncollectoriginId',
-          method: 'POST',
-          data: {
-            id: collectid,
-            username: islogin
-          },
-          header: {
-            'content-type': 'application/x-www-form-urlencoded'
-          },
-          success: function(res) {
+        util.post(api.uncollect_originId.replace("$1", collectid))
+          .then((res) => {
             wx.hideLoading()
-            console.log(res.data)
-            if (res.data.errorCode != 0) {
-              wx.showToast({
-                title: res.data.errorMsg,
-                icon: 'none'
-              })
-            } else {
-              var update = that.data.pagerList
-              update[postion].collect = false
-              that.setData({
-                pagerList: update
-              })
-              wx.showToast({
-                title: '取消收藏成功',
-                icon: 'success',
-                duration: 1000
-              })
-              //取消收藏，从我的收藏ids中移除
-              let appcollect = []
-              for (var i in app.globalData.collectids) {
-                if (collectid != app.globalData.collectids[i]) {
-                  appcollect.push(app.globalData.collectids[i])
-                }
-              }
-              app.globalData.collectids = appcollect
-
-            }
-          },
-          fail: function() {
+            var update = that.data.pagerList
+            update[postion].collect = false
+            that.setData({
+              pagerList: update
+            })
+            wx.showToast({
+              title: '取消收藏成功',
+              icon: 'success',
+              duration: 1000
+            })
+          }).catch((errMsg) => {
             wx.hideLoading()
-          }
-        })
+          });
       } else {
         //未收藏，添加收藏
-        wx.request({
-          url: app.globalData.baseUrl + '/collect',
-          method: 'POST',
-          data: {
-            id: collectid,
-            username: islogin
-          },
-          header: {
-            'content-type': 'application/x-www-form-urlencoded'
-          },
-          success: function(res) {
+        util.post(api.collect.replace("$1", collectid))
+          .then((res) => {
             wx.hideLoading()
-            console.log(res.data)
-            if (res.data.errorCode != 0) {
-              wx.showToast({
-                title: res.data.errorMsg,
-                icon: 'none'
-              })
-            } else {
-              var update = that.data.pagerList
-              update[postion].collect = true
-              that.setData({
-                pagerList: update
-              })
-              wx.showToast({
-                title: '收藏成功',
-                icon: 'success',
-                duration: 1000
-              })
-              //收藏成功，将id加入到收藏的ids
-              app.globalData.collectids.push(collectid)
-            }
-          },
-          fail: function() {
+            var update = that.data.pagerList
+            update[postion].collect = true
+            that.setData({
+              pagerList: update
+            })
+            wx.showToast({
+              title: '收藏成功',
+              icon: 'success',
+              duration: 1000
+            })
+          }).catch((errMsg) => {
             wx.hideLoading()
-          }
-        })
+          });
       }
     }
   },
@@ -259,63 +193,43 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
     //再次回到页面时，根据收藏的ids刷新一下收藏的状态
     that = this;
-    var collectids = app.globalData.collectids
-    var bool = collectids.length == 0
-    var list = that.data.pagerList
-    for (var i in list) {
-      if (bool) {
-        list[i].collect = false
-      } else {
-        for (var j in collectids) {
-          if (list[i].id == collectids[j]) {
-            //状态为收藏时，跳出一层循环
-            list[i].collect = true
-            break
-          } else {
-            list[i].collect = false
-          }
-        }
-      }
-    }
-    that.setData({
-      pagerList: list
-    })
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
     // 显示顶部刷新图标
     wx.showNavigationBarLoading();
     that = this; //不要漏了这句，很重要
     that.setData({
       pagenumber: 1,
       isRefresh: true,
+      isloadmore: false,
       key: ''
     })
     that.getPagerData()
@@ -324,19 +238,21 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
     that = this; //不要漏了这句，很重要
-    var page = that.data.pagenumber + 1;
-    that.setData({
-      pagenumber: page
-    })
-    that.getPagerData()
+    if (that.data.isloadmore) {
+      var page = that.data.pagenumber + 1;
+      that.setData({
+        pagenumber: page
+      })
+      that.getPagerData()
+    }
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   }
 })

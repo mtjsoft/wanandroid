@@ -2,6 +2,7 @@
 //获取应用实例
 const app = getApp()
 const util = require('../../utils/util.js');
+const api = require('../../config/api.js');
 var that = this
 Page({
 
@@ -30,27 +31,21 @@ Page({
   },
 
   gethotkey: function() {
-    wx.request({
-      url: app.globalData.baseUrl + '/hotkey',
-      method: 'GET',
-      success: function(res) {
+    util.get(api.hotkey)
+      .then((res) => {
         that.setData({
-          items: res.data.data
+          items: res
         })
-      }
-    })
+      }).catch((errMsg) => {});
   },
 
   getnetaddress: function() {
-    wx.request({
-      url: app.globalData.baseUrl + '/friend',
-      method: 'GET',
-      success: function(res) {
+    util.get(api.friend)
+      .then((res) => {
         that.setData({
-          netaddress: res.data.data
+          netaddress: res
         })
-      }
-    })
+      }).catch((errMsg) => {});
   },
 
   /**

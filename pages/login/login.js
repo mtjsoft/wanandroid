@@ -1,5 +1,7 @@
 // pages/login/login.js
 const app = getApp()
+const util = require('../../utils/util.js');
+const api = require('../../config/api.js');
 var that = this
 Page({
 
@@ -14,7 +16,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     that = this
   },
 
@@ -22,7 +24,7 @@ Page({
   /**
    * 用户名
    */
-  loginusername: function(e) {
+  loginusername: function (e) {
     this.setData({
       username: e.detail
     })
@@ -31,13 +33,13 @@ Page({
   /**
    * 密码
    */
-  loginpassword: function(e) {
+  loginpassword: function (e) {
     this.setData({
       password: e.detail
     })
   },
 
-  register:function(){
+  register: function () {
     wx.navigateTo({
       url: '../register/register',
     })
@@ -46,7 +48,7 @@ Page({
   /**
    * 点击登录
    */
-  clicklogin: function() {
+  clicklogin: function () {
     if (that.data.username == '') {
       wx.showToast({
         title: '请输入用户名',
@@ -61,101 +63,89 @@ Page({
       wx.showLoading({
         title: '正在登录...',
       })
-      wx.request({
-        url: app.globalData.baseUrl + '/login',
-        method: 'POST',
-        data: {
+      util.post(api.login, {
           username: that.data.username,
           password: that.data.password
-        },
-        header: {
-          'content-type': 'application/x-www-form-urlencoded'
-        },
-        success: function(res) {
+        })
+        .then((res) => {
           wx.hideLoading()
-          console.log(res)
-          if (res.data.errorCode != 0){
-            wx.showToast({
-              title: res.data.errorMsg,
-              icon: 'none'
-            })
-          }else{
-            app.globalData.collectids = res.data.data.collectIds
-            wx.showToast({
-              title: '登陆成功',
-              icon: 'success',
-              duration: 200
-            })
-            wx.setStorage({
-              key: "username",
-              data: res.data.data.username
-            })
-            wx.setStorage({
-              key: "password",
-              data: res.data.data.password
-            })
-            wx.setStorage({
-              key: "userid",
-              data: res.data.data.id
-            })
-            wx.navigateBack({
-              delta: 1
-            })
-          }
-        },
-        fail:function(){
+          wx.showToast({
+            title: '登陆成功',
+            icon: 'success',
+            duration: 200
+          })
+          wx.setStorage({
+            key: "nickname",
+            data: res.username
+          })
+          wx.setStorage({
+            key: "password",
+            data: res.password
+          })
+          wx.setStorage({
+            key: "userid",
+            data: res.id
+          })
+          wx.navigateBack({
+            delta: 1
+          })
+        }).catch((errMsg) => {
           wx.hideLoading()
-        }
-      })
+          wx.showToast({
+            title: errMsg,
+            icon: 'none',
+            duration: 1000
+          })
+        });
     }
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   }
 })

@@ -22,7 +22,7 @@ function formatNumber(n) {
  * 上传图片，返回服务器图片路径
  */
 function uploadFile(uploadUrl, path, fileName = 'file', data = {}) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     wx.uploadFile({
       url: uploadUrl,
       filePath: path,
@@ -56,31 +56,67 @@ function uploadFile(uploadUrl, path, fileName = 'file', data = {}) {
  */
 function request(url, data = {}, method = "GET") {
   var contentType = 'application/x-www-form-urlencoded'
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     wx.request({
       url: url,
       data: data,
       method: method,
       header: {
         'Content-Type': contentType,
-        'Authorization': 'Bearer ' + getDataByKey('token')
+        'cookie': getDataByKey('sessionid')
       },
-      success: function(res) {
+      success: function (res) {
         if (res.statusCode == 200) {
           //请求正常200
           if (res.data.errorCode == 0) {
+            var cookie = res.header["Set-Cookie"];
+            if (cookie != null) {
+              wx.setStorageSync("sessionid", cookie); //服务器返回的Set-Cookie，保存到本地
+            }
             resolve(res.data.data);
+          } else if (res.data.errorCode == -1001) {
+            wx.setStorage({
+              key: "sessionid",
+              data: ''
+            })
+            wx.setStorage({
+              key: "nickname",
+              data: ''
+            })
+            wx.setStorage({
+              key: "password",
+              data: ''
+            })
+            wx.setStorage({
+              key: "userid",
+              data: ''
+            })
+            // 请先登录
+            wx.showModal({
+              title: '提示',
+              content: '请先登录！',
+              success(res) {
+                if (res.confirm) {
+                  wx.navigateTo({
+                    url: '/pages/login/login',
+                  })
+                } else if (res.cancel) {
+                  console.log('用户点击取消')
+                }
+              }
+            })
           } else {
             reject("失败" + res.data.errorMsg)
           }
         } else if (res.statusCode == 401) {
           // token失效，需要重新换取token
+          reject("token失效")
         } else {
           //请求失败
           reject("服务器连接异常")
         }
       },
-      fail: function(err) {
+      fail: function (err) {
         //服务器连接异常
         reject("服务器连接异常，请检查网络再试")
       }
@@ -134,7 +170,7 @@ function pushMsg(text, desp) {
     header: {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
-    success: function(res) {
+    success: function (res) {
       wx.hideLoading()
       if (res.statusCode == 200) {
         //请求正常200
@@ -158,7 +194,7 @@ function pushMsg(text, desp) {
         })
       }
     },
-    fail: function(err) {
+    fail: function (err) {
       //服务器连接异常
       wx.hideLoading()
       wx.showToast({
@@ -173,9 +209,9 @@ function pushMsg(text, desp) {
  * 调用微信登录
  */
 function login() {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     wx.login({
-      success: function(res) {
+      success: function (res) {
         if (res.code) {
           console.log('登录获取的code===' + res.code)
           resolve(res);
@@ -183,7 +219,7 @@ function login() {
           reject(res);
         }
       },
-      fail: function(err) {
+      fail: function (err) {
         console.log(err)
         reject(err);
       }
@@ -195,16 +231,16 @@ function login() {
  * 获取用户信息
  */
 function getUserInfo() {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     wx.getUserInfo({
-      success: function(res) {
+      success: function (res) {
         if (res.detail.errMsg === 'getUserInfo:ok') {
           resolve(res);
         } else {
           reject(res)
         }
       },
-      fail: function(err) {
+      fail: function (err) {
         reject(err);
       }
     })

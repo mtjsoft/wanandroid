@@ -1,5 +1,7 @@
 // pages/todo/todo.js
 const app = getApp()
+const util = require('../../utils/util.js');
+const api = require('../../config/api.js');
 var that = this
 Page({
 
@@ -12,7 +14,7 @@ Page({
     username: '',
     dates: '2019-12-12',
     index: 0,
-    objectArray: ['重要', '工作', '学习', '生活'],
+    objectArray: ['工作', '生活', '娱乐'],
     title: '',
     desc: '',
     id: '',
@@ -23,7 +25,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     that = this
     if (options.type == "add") {
       that.setData({
@@ -48,32 +50,32 @@ Page({
 
 
   //  点击日期组件确定事件  
-  bindDateChange: function(e) {
+  bindDateChange: function (e) {
     this.setData({
       dates: e.detail.value
     })
   },
   //  点击类型组件确定事件  
-  bindTypeChange: function(e) {
+  bindTypeChange: function (e) {
     this.setData({
       index: e.detail.value
     })
   },
 
   //状态选择
-  bindStatusChange: function(e) {
+  bindStatusChange: function (e) {
     this.setData({
       status: e.detail.value
     })
   },
 
-  titleinput: function(e) {
+  titleinput: function (e) {
     that.setData({
       title: e.detail
     })
   },
 
-  descinput: function(e) {
+  descinput: function (e) {
     that.setData({
       desc: e.detail
     })
@@ -82,8 +84,8 @@ Page({
   /**
    * 提交
    */
-  submit: function() {
-    var islogin = wx.getStorageSync('username')
+  submit: function () {
+    var islogin = util.getNickName()
     if (islogin == null || islogin == "") {
       wx.showToast({
         title: '请先登录',
@@ -113,121 +115,106 @@ Page({
       return
     }
     if (that.data.pageType == 'add') {
-      wx.request({
-        url: app.globalData.baseUrl + '/todo/add',
-        method: 'POST',
-        header: {
-          'content-type': 'application/x-www-form-urlencoded'
-        },
-        data: {
-          username: islogin,
-          typename: that.data.index + '',
+      wx.showLoading()
+      util.post(api.addTODO, {
           title: that.data.title,
           content: that.data.desc,
-          date: that.data.dates
-        },
-        success: function(res) {
-          if (res.data.errorCode != 0) {
-            wx.showToast({
-              title: res.data.errorMsg,
-            })
-          } else {
-            wx.showToast({
-              title: '添加成功',
-              icon: 'success',
-              duration: 1000,
-              success: function () {
-                wx.redirectTo({
-                  url: '../notdo/notdo?username=' + islogin
-                })
-              }
-            })
-          }
-        }
-      })
+          date: that.data.dates,
+          type: that.data.index + 1
+        })
+        .then((res) => {
+          wx.hideLoading()
+          wx.showToast({
+            title: '添加成功',
+            icon: 'success',
+            duration: 1000,
+            success: function () {
+              wx.redirectTo({
+                url: '../notdo/notdo?username=' + islogin
+              })
+            }
+          })
+        }).catch((errMsg) => {
+          wx.hideLoading()
+          wx.showToast({
+            title: errMsg,
+          })
+        });
     } else {
-      wx.request({
-        url: app.globalData.baseUrl + '/todo/update',
-        method: 'POST',
-        header: {
-          'content-type': 'application/x-www-form-urlencoded'
-        },
-        data: {
-          username: islogin,
-          typename: that.data.index + '',
+      wx.showLoading()
+      util.post(api.updateTODO.replace("$1", that.data.id), {
           title: that.data.title,
           content: that.data.desc,
-          date: that.data.dates + '',
-          id: that.data.id + '',
-          status: that.data.status + ''
-        },
-        success: function(res) {
-          if (res.data.errorCode != 0) {
-            wx.showToast({
-              title: res.data.errorMsg,
-            })
-          } else {
-            wx.showToast({
-              title: '编辑成功',
-              icon: 'success',
-              duration: 1000,
-              success: function() {
-                wx.navigateBack({
-                  delta: 1
-                })
-              }
-            })
-          }
-        }
-      })
+          date: that.data.dates,
+          type: that.data.index + 1,
+          status: that.data.status
+        })
+        .then((res) => {
+          wx.hideLoading()
+          wx.showToast({
+            title: '编辑成功',
+            icon: 'success',
+            duration: 1000,
+            success: function () {
+              wx.navigateBack({
+                delta: 1
+              })
+            }
+          })
+        }).catch((errMsg) => {
+          wx.hideLoading()
+          wx.showToast({
+            title: errMsg,
+          })
+        });
     }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   }
 })

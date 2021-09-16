@@ -1,5 +1,7 @@
 // pages/tixi/tixi.js
 const app = getApp()
+const util = require('../../utils/util.js');
+const api = require('../../config/api.js');
 var that = this
 Page({
 
@@ -25,11 +27,9 @@ Page({
   },
 
   getListData: function() {
-    wx.request({
-      url: app.globalData.baseUrl + '/tree',
-      method: 'GET',
-      success: function(res) {
-        let list = res.data.data;
+    util.get(api.tree)
+      .then((res) => {
+        let list = res;
         for(var i = 0; i < list.length; i++){
           list[i].id = i
         }
@@ -40,8 +40,7 @@ Page({
           colorArr: colors,
           colorCount: colors.length
         })
-      }
-    })
+      }).catch((errMsg) => {});
   },
 
   /**

@@ -1,6 +1,8 @@
 // pages/register/register.js
 // pages/login/login.js
 const app = getApp()
+const util = require('../../utils/util.js');
+const api = require('../../config/api.js');
 var that = this
 Page({
 
@@ -56,40 +58,30 @@ Page({
       wx.showLoading({
         title: '正在注册...',
       })
-      wx.request({
-        url: app.globalData.baseUrl + '/register',
-        method: 'POST',
-        data: {
-          username: that.data.username,
-          password: that.data.password,
-          repassword: that.data.password,
-        },
-        header: {
-          'content-type': 'application/x-www-form-urlencoded'
-        },
-        success: function(res) {
-          wx.hideLoading()
-          console.log(res.data)
-          if (res.data.errorCode != 0) {
-            wx.showToast({
-              title: res.data.errorMsg,
-              icon: 'none'
-            })
-          } else {
-            wx.showToast({
-              title: '注册成功',
-              icon: 'success',
-              duration: 200
-            })
-            wx.navigateBack({
-              delta: 1
-            })
-          }
-        },
-        fail: function() {
-          wx.hideLoading()
-        }
+
+      util.post(api.register, {
+        username: that.data.username,
+        password: that.data.password,
+        repassword: that.data.password
       })
+      .then((res) => {
+        wx.hideLoading()
+        wx.showToast({
+          title: '注册成功',
+          icon: 'success',
+          duration: 200
+        })
+        wx.navigateBack({
+          delta: 1
+        })
+      }).catch((errMsg) => {
+        wx.hideLoading()
+        wx.showToast({
+          title: errMsg,
+          icon: 'none',
+          duration: 1000
+        })
+      });
     }
   },
 

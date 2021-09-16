@@ -1,6 +1,7 @@
 // pages/project/project.js
 const app = getApp()
 const util = require('../../utils/util.js');
+const api = require('../../config/api.js');
 var that = this
 Page({
 
@@ -29,40 +30,35 @@ Page({
    */
   getPagerData: function() {
     wx.showNavigationBarLoading()
-    wx.request({
-      url: app.globalData.baseUrl + '/project/list',
-      method: 'GET',
-      data: {
-        pagernumber: that.data.pagenumber,
-        cid: that.data.id
-      },
-      success: function(res) {
-        console.log(res.data)
+    util.get(api.projectList2.replace("$1", that.data.pagenumber))
+      .then((res) => {
         // 隐藏导航栏加载框
         wx.hideNavigationBarLoading();
         // 停止下拉动作
         wx.stopPullDownRefresh();
-        var list = res.data.data.datas
+        var list = res.datas
         if (that.data.isRefresh) {
           that.setData({
             pagerList: list,
-            isRefresh: false
+            isRefresh: false,
+            isloadmore: list.length < res.total,
+            loading: false
           })
         } else {
           var templist = that.data.pagerList
           var resultlist = templist.concat(list)
           that.setData({
-            pagerList: resultlist
+            pagerList: resultlist,
+            isloadmore: resultlist.length < res.total,
+            loading: false
           })
         }
-      },
-      fail: function() {
+      }).catch((errMsg) => {
         // 隐藏导航栏加载框
         wx.hideNavigationBarLoading();
         // 停止下拉动作
         wx.stopPullDownRefresh();
-      }
-    })
+      });
   },
 
   /**
@@ -74,6 +70,63 @@ Page({
     var title = that.data.pagerList[index].title;
     var link = that.data.pagerList[index].link;
     util.pushMsg(title, "[" + link + "](" + link + ")");
+  },
+
+  /**
+   * 收藏/取消收藏
+   */
+  collect: function (event) {
+    that = this; //不要漏了这句，很重要
+    var islogin = util.getNickName()
+    if (islogin == null || islogin == "") {
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none'
+      })
+    } else {
+      var postion = event.currentTarget.id
+      var collectid = that.data.pagerList[postion].id
+      wx.showLoading({
+        title: '正在加载...',
+      })
+      //如果已收藏，就取消收藏
+      if (that.data.pagerList[postion].collect) {
+        util.post(api.uncollect_originId.replace("$1", collectid))
+          .then((res) => {
+            wx.hideLoading()
+            var update = that.data.pagerList
+            update[postion].collect = false
+            that.setData({
+              pagerList: update
+            })
+            wx.showToast({
+              title: '取消收藏成功',
+              icon: 'success',
+              duration: 1000
+            })
+          }).catch((errMsg) => {
+            wx.hideLoading()
+          });
+      } else {
+        //未收藏，添加收藏
+        util.post(api.collect.replace("$1", collectid))
+          .then((res) => {
+            wx.hideLoading()
+            var update = that.data.pagerList
+            update[postion].collect = true
+            that.setData({
+              pagerList: update
+            })
+            wx.showToast({
+              title: '收藏成功',
+              icon: 'success',
+              duration: 1000
+            })
+          }).catch((errMsg) => {
+            wx.hideLoading()
+          });
+      }
+    }
   },
 
   /**
@@ -123,11 +176,13 @@ Page({
    */
   onReachBottom: function() {
     that = this; //不要漏了这句，很重要
-    var page = that.data.pagenumber + 1;
-    that.setData({
-      pagenumber: page
-    })
-    that.getPagerData()
+    if (that.data.isloadmore) {
+      var page = that.data.pagenumber + 1;
+      that.setData({
+        pagenumber: page
+      })
+      that.getPagerData()
+    }
   },
 
   /**

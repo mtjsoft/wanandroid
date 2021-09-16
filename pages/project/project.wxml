@@ -11,7 +11,12 @@
       <text class='title '>{{item.title}}</text>
       <text class='desc'>{{item.desc}}</text>
       <text class='author'>时间:{{item.niceDate}}</text>
-      <text class='author'>作者:{{item.author}}</text>
+      <view class='listtop'>
+        <text class='author'>作者:{{item.author}}</text>
+        <image wx:if="{{item.collect}}" class='collect' src='/images/img_collect_ed.png' id='{{index}}'
+          catchtap='collect'></image>
+        <image wx:else class='collect' src='/images/img_collect.png' id='{{index}}' catchtap='collect'></image>
+      </view>
     </view>
   </view>
 
@@ -21,6 +26,6 @@
   </view>
 </block>
 
-<view class="loadmore">
+<view class="loadmore" wx:if="{{isloadmore}}">
   <van-loading size="24px">加载中...</van-loading>
 </view>

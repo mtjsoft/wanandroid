@@ -1,5 +1,7 @@
 // pages/chapters/chapters.js
 const app = getApp()
+const util = require('../../utils/util.js');
+const api = require('../../config/api.js');
 var that = this
 Page({
 
@@ -35,15 +37,13 @@ Page({
    */
   getPagerData: function() {
     wx.showNavigationBarLoading()
-    wx.request({
-      url: app.globalData.baseUrl + '/wxarticle/chapters',
-      method: 'GET',
-      success: function(res) {
+    util.get(api.chapters)
+      .then((res) => {
         // 隐藏导航栏加载框
         wx.hideNavigationBarLoading();
         // 停止下拉动作
         wx.stopPullDownRefresh();
-        var list = res.data.data
+        var list = res
         if (that.data.isRefresh) {
           that.setData({
             pagerList: list,
@@ -56,14 +56,12 @@ Page({
             pagerList: resultlist
           })
         }
-      },
-      fail: function() {
+      }).catch((errMsg) => {
         // 隐藏导航栏加载框
         wx.hideNavigationBarLoading();
         // 停止下拉动作
         wx.stopPullDownRefresh();
-      }
-    })
+      });
   },
 
   /**
