@@ -11,7 +11,7 @@ Page({
   data: {
     username: '未登录',
     myRank: null,
-    isShowToDo: true
+    isShowToDo: false
   },
 
   /**
@@ -27,9 +27,18 @@ Page({
   itemClick: function (e) {
     var islogin = util.getNickName()
     if (islogin == null || islogin == "") {
-      wx.showToast({
-        title: '请先登录',
-        icon: 'none'
+      wx.showModal({
+        title: '提示',
+        content: '请先登录！',
+        success(res) {
+          if (res.confirm) {
+            wx.navigateTo({
+              url: '/pages/login/login',
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
       })
     } else {
       var type = parseInt(e.currentTarget.dataset.type);
@@ -108,22 +117,7 @@ Page({
           username: '未登录',
           myRank: null
         })
-        wx.setStorage({
-          key: "sessionid",
-          data: ''
-        })
-        wx.setStorage({
-          key: "nickname",
-          data: ''
-        })
-        wx.setStorage({
-          key: "password",
-          data: ''
-        })
-        wx.setStorage({
-          key: "userid",
-          data: ''
-        })
+        util.clearLogin()
         wx.showToast({
           title: '退出成功',
           icon: 'success',
@@ -160,7 +154,7 @@ Page({
       })
       that.getRankInfo()
     }
-    // that.getIsShowToDo();
+    that.getIsShowToDo();
   },
 
   /**
@@ -171,7 +165,14 @@ Page({
       that.setData({
         myRank: res
       })
-    }).catch((errMsg) => {});
+    }).catch((errMsg) => {
+      if (errMsg == "-1001") {
+        that.setData({
+          username: '未登录',
+          myRank: null
+        })
+      }
+    });
   },
 
 
@@ -179,12 +180,22 @@ Page({
    * 是否显示TODO
    */
   getIsShowToDo: function () {
-    util.get(api.ShowToDo)
-      .then((res) => {
-        that.setData({
-          isShowToDo: res.isShowToDo
+    if (!that.data.isShowToDo) {
+      util.wxCloud("versionPass", {
+          versionCode: app.globalData.versionCode
         })
-      }).catch((errMsg) => {});
+        .then((res) => {
+          console.log(res);
+          that.setData({
+            isShowToDo: res.versionPass
+          })
+        }).catch((errMsg) => {
+          console.log(errMsg);
+          that.setData({
+            isShowToDo: false
+          })
+        });
+    }
   },
 
   /**

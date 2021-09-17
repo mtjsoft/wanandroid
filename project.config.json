@@ -41,7 +41,9 @@
   "projectname": "wanandroid",
   "isGameTourist": false,
   "simulatorType": "wechat",
+  "cloudfunctionRoot": "cloudfunctions/",
   "simulatorPluginLibVersion": {},
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
   "condition": {
     "search": {
       "list": []

@@ -80,7 +80,8 @@
     "van-field": "/dist/field/index",
     "van-button": "/dist/button/index",
     "van-cell": "/dist/cell/index",
-    "van-cell-group": "/dist/cell-group/index"
+    "van-cell-group": "/dist/cell-group/index",
+    "van-dialog": "/dist/dialog/index"
   },
   "debug": true,
   "sitemapLocation": "sitemap.json"

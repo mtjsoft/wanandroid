@@ -69,28 +69,16 @@ function request(url, data = {}, method = "GET") {
         if (res.statusCode == 200) {
           //请求正常200
           if (res.data.errorCode == 0) {
-            var cookie = res.header["Set-Cookie"];
-            if (cookie != null) {
-              wx.setStorageSync("sessionid", cookie); //服务器返回的Set-Cookie，保存到本地
+            if (url.indexOf("/user/login") != -1) {
+              var cookie = res.header["Set-Cookie"];
+              if (cookie != null) {
+                wx.setStorageSync("sessionid", cookie); //服务器返回的Set-Cookie，保存到本地
+              }
             }
             resolve(res.data.data);
           } else if (res.data.errorCode == -1001) {
-            wx.setStorage({
-              key: "sessionid",
-              data: ''
-            })
-            wx.setStorage({
-              key: "nickname",
-              data: ''
-            })
-            wx.setStorage({
-              key: "password",
-              data: ''
-            })
-            wx.setStorage({
-              key: "userid",
-              data: ''
-            })
+            clearLogin()
+            reject("-1001")
             // 请先登录
             wx.showModal({
               title: '提示',
@@ -141,68 +129,61 @@ function post(url, data = {}) {
 /**
  * PUSH消息
  */
+
 function pushMsg(text, desp) {
-  var key = getDataByKey('sckey');
-  if (key == "") {
-    wx.showModal({
-      title: '设置Key',
-      content: '先设置有效的Server酱Key,才能推送连接',
-      success(res) {
-        if (res.confirm) {
-          wx.navigateTo({
-            url: '/pages/serverkey/serverkey',
-          })
-        } else if (res.cancel) {
-          console.log('用户点击取消')
-        }
-      }
-    })
-    return
-  }
-  wx.showLoading({})
-  wx.request({
-    url: api.PushMSG + key + ".send",
-    data: {
-      text: text,
-      desp: desp
-    },
-    method: "POST",
-    header: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    success: function (res) {
-      wx.hideLoading()
-      if (res.statusCode == 200) {
-        //请求正常200
-        console.log(res.data)
-        var data = res.data;
-        if (data.errno == 0) {
-          wx.showToast({
-            title: '微信消息推送成功!',
-          })
-        } else {
-          wx.showToast({
-            title: data.errmsg,
-            icon: "none"
-          })
-        }
-      } else {
-        //请求失败
-        wx.showToast({
-          title: '发送失败',
-          icon: "none"
-        })
-      }
-    },
-    fail: function (err) {
-      //服务器连接异常
-      wx.hideLoading()
-      wx.showToast({
-        title: '发送失败',
-        icon: "none"
-      })
+  console.log(text + desp);
+  var link = desp.substring(0, desp.indexOf("("))
+  let copy = text + '  ' + link + '(点击左侧链接查看)';
+  console.log(copy);
+  wx.setClipboardData({
+    data: copy,
+    success (res) {
+      // 去客服中心
+      console.log("复制成功，去客服中心");
     }
   })
+}
+
+/**
+ * 调用微信云函数
+ * @param {云函数名称} name 
+ * @param {传给云函数的参数} data 
+ */
+function wxCloud(name, data = {}) {
+  return new Promise(function (resolve, reject) {
+    wx.cloud.callFunction({
+      // 云函数名称
+      name: name,
+      // 传给云函数的参数
+      data: data,
+      success: function (res) {
+        console.log(res)
+        resolve(res.result);
+      },
+      fail: function (error) {
+        console.log(error)
+        reject(error)
+      }
+    })
+  });
+}
+
+/**
+ * 从云函数获取openID
+ */
+function getOpenIDByCloud() {
+  // 获取openID
+  wxCloud("openId").then((res) => {
+    wx.setStorage({
+      key: "openId",
+      data: res.openid
+    })
+  }).catch((errMsg) => {
+    console.log(errMsg);
+    that.setData({
+      isShowToDo: false
+    })
+  });
 }
 
 /**
@@ -265,6 +246,13 @@ function getUserId() {
 }
 
 /**
+ * 获取用户openID
+ */
+function getUserOpenId() {
+  return getDataByKey('openId')
+}
+
+/**
  * 获取用户绑定的手机号
  */
 function getUserPhone() {
@@ -283,6 +271,27 @@ function getHeadUrl() {
  */
 function getNickName() {
   return getDataByKey('nickname')
+}
+/**
+ * 清空登录信息
+ */
+function clearLogin() {
+  wx.setStorage({
+    key: "sessionid",
+    data: ''
+  })
+  wx.setStorage({
+    key: "nickname",
+    data: ''
+  })
+  wx.setStorage({
+    key: "password",
+    data: ''
+  })
+  wx.setStorage({
+    key: "userid",
+    data: ''
+  })
 }
 
 /**
@@ -332,7 +341,6 @@ function clearNoNum(number) {
   return number
 }
 
-
 module.exports = {
   formatTime,
   uploadFile,
@@ -343,6 +351,7 @@ module.exports = {
   getUserInfo,
   getDataByKey,
   getUserId,
+  getUserOpenId,
   getUserPhone,
   getHeadUrl,
   getNickName,
@@ -351,5 +360,8 @@ module.exports = {
   accMul,
   accDiv,
   clearNoNum,
-  pushMsg
+  clearLogin,
+  pushMsg,
+  wxCloud,
+  getOpenIDByCloud
 }

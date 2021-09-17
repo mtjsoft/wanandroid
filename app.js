@@ -1,11 +1,10 @@
 //app.js
 App({
   globalData: {
+    versionCode: 300,
+    versionName: '3.0.0',
     //主题颜色
     mainColor: "#1B82D1",
-    //服务器地址
-    baseUrl: "https://www.mtjsoft.cn/wanandroid/api",
-    // baseUrl: "http://10.10.40.94:8080/wanandroid/api",
     //搜索关键词
     key: '',
     //收藏的列表ids
@@ -14,6 +13,7 @@ App({
     systemtypelist: [],
     //文章详情的链接
     desclink: '',
+    userInfo: null,
     ColorList: [{
         title: '嫣红',
         name: 'red',
@@ -85,38 +85,29 @@ App({
   /**
    * 进入时，如果已登陆，就在登录获取已下已收藏的ids
    */
-  onLaunch: function() {
+  onLaunch: function () {
     var that = this
-    var islogin = wx.getStorageSync('username')
-    var psw = wx.getStorageSync('password')
-    if (islogin != null && islogin != "") {
-      wx.request({
-        url: that.globalData.baseUrl + '/login',
-        method: 'POST',
-        data: {
-          username: islogin,
-          password: psw
-        },
-        header: {
-          'content-type': 'application/x-www-form-urlencoded'
-        },
-        success: function(res) {
-          wx.hideLoading()
-          if (res.data.errorCode == 0) {
-            that.globalData.collectids = res.data.data.collectIds
-          }
-        },
-        fail: function() {
-          wx.hideLoading()
-        }
-      })
-    }
-
-    if (wx.cloud) {
-      wx.cloud.init({
-        traceUser: true
-      })
-    }
+    wx.cloud.init({
+      env: "cloud1-2g008j0a01934888",
+      traceUser: true
+    })
+    // 获取openID
+    wx.cloud.callFunction({
+      // 云函数名称
+      name: "openId",
+      // 传给云函数的参数
+      data: {},
+      success: function (res) {
+        console.log(res)
+        wx.setStorage({
+          key: "openId",
+          data: res.result.openid
+        })
+      },
+      fail: function (error) {
+        console.log(error)
+      }
+    })
     wx.getSystemInfo({
       success: e => {
         this.globalData.StatusBar = e.statusBarHeight;
@@ -129,6 +120,25 @@ App({
         }
       }
     })
-  }
+    // 获取用户信息
+    wx.getSetting({
+      success: res => {
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+          wx.getUserInfo({
+            success: res => {
+              // 可以将 res 发送给后台解码出 unionId
+              this.globalData.userInfo = res.userInfo
 
+              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+              // 所以此处加入 callback 以防止这种情况
+              if (this.userInfoReadyCallback) {
+                this.userInfoReadyCallback(res)
+              }
+            }
+          })
+        }
+      }
+    })
+  }
 })

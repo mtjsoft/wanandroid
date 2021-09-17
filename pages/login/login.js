@@ -18,6 +18,9 @@ Page({
    */
   onLoad: function (options) {
     that = this
+    if (util.getUserOpenId() == "") {
+      util.getOpenIDByCloud()      
+    }
   },
 
 

@@ -30,6 +30,7 @@
 			<image wx:if="{{item.collect}}" class='collect' src='/images/img_collect_ed.png' id='{{index}}' catchtap='collect'></image>
 			<image wx:else class='collect' src='/images/img_collect.png' id='{{index}}' catchtap='collect'></image>
 		</view>
+		<button class="joinSeesion" open-type="contact" bindcontact="handleContact"></button>
 	</view>
 	<!-- 广告 -->
 	<view wx:if="{{(index + 1)%15 == 0}}" class="shadow shadow-lg bg-white margin">

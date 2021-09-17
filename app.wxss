@@ -104,6 +104,7 @@ page {
 }
 
 .liststyle{
+  position: relative;
   display: flex;
   flex-direction: column;
   background-color: #fff;
@@ -150,4 +151,17 @@ page {
 .collect{
   width: 44rpx;
   height: 44rpx;
+}
+
+.joinSeesion{
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  left: 0px;
+  top: 0px;
+  position: absolute;
+  z-index: 99999999;
+}
+button::after{
+  border: none;
 }
