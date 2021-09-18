@@ -86,13 +86,6 @@ Page({
    */
   submit: function () {
     var islogin = util.getNickName()
-    if (islogin == null || islogin == "") {
-      wx.showToast({
-        title: '请先登录',
-        icon: 'none'
-      })
-      return
-    }
     if (that.data.title == '') {
       wx.showToast({
         title: '请输入标题',

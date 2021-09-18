@@ -8,12 +8,12 @@ exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
   try {
     const result = await cloud.openapi.customerServiceMessage.send({
-        "touser": wxContext.OPENID,
-        "msgtype": 'text',
-        "text": {
-          "content": '您好！请将剪切板的内容粘贴并发送，点击内容链接即可查看详情。'
-        }
-      })
+      "touser": wxContext.OPENID,
+      "msgtype": 'text',
+      "text": {
+        "content": '请将剪切板的内容粘贴并发送给我哦。'
+      }
+    })
     return result
   } catch (err) {
     return err

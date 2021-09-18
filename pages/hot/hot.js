@@ -91,6 +91,15 @@ Page({
     var name = that.data.netaddress[index].name;
     var link = that.data.netaddress[index].link;
     util.pushMsg(name, "[" + link + "](" + link + ")");
+    that.setData({
+      showDetail: true
+    })
+  },
+
+  onClose: function () {
+    that.setData({
+      showDetail: false
+    })
   },
 
   /**

@@ -29,7 +29,7 @@ Page({
     if (islogin == null || islogin == "") {
       wx.showModal({
         title: '提示',
-        content: '请先登录！',
+        content: '账号未登录，请先前往登录！',
         success(res) {
           if (res.confirm) {
             wx.navigateTo({
@@ -111,25 +111,35 @@ Page({
    * 退出登陆
    */
   loginout: function () {
-    util.get(api.logout)
-      .then((res) => {
-        that.setData({
-          username: '未登录',
-          myRank: null
-        })
-        util.clearLogin()
-        wx.showToast({
-          title: '退出成功',
-          icon: 'success',
-          duration: 200
-        })
-      }).catch((errMsg) => {
-        wx.showToast({
-          title: errMsg,
-          icon: 'none',
-          duration: 200
-        })
-      });
+    wx.showModal({
+      title: '提示',
+      content: '确定要退出当前登录吗？',
+      success(res) {
+        if (res.confirm) {
+          util.get(api.logout)
+            .then((res) => {
+              that.setData({
+                username: '未登录',
+                myRank: null
+              })
+              util.clearLogin()
+              wx.showToast({
+                title: '退出成功',
+                icon: 'success',
+                duration: 200
+              })
+            }).catch((errMsg) => {
+              wx.showToast({
+                title: errMsg,
+                icon: 'none',
+                duration: 200
+              })
+            });
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
   },
 
   /**

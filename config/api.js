@@ -1,13 +1,8 @@
 
-// const ApiRootUrl = 'https://www.mtjsoft.cn/wanandroid/api/'
-
 const ApiRootUrl = 'https://www.wanandroid.com/'
 
 module.exports = {
 
-  PushMSG: 'https://sc.ftqq.com/', //推送消息
-
-  Authenticate: ApiRootUrl + 'TokenAuth/Authenticate', //登录
   login: ApiRootUrl + 'user/login', //登录
   register: ApiRootUrl + 'user/register', //注册
   logout: ApiRootUrl + 'user/logout/json', //退出

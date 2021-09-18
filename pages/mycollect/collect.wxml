@@ -25,3 +25,13 @@
 <view class="loadmore" wx:if="{{isloadmore}}">
 	<van-loading size="24px">加载中...</van-loading>
 </view>
+
+<van-dialog
+  title="提示"
+	show="{{showDetail}}"
+	message="链接已复制，粘贴发送即可打开"
+  show-cancel-button
+  confirm-button-open-type="contact"
+	bind:close="onClose"
+	confirmButtonText="立即发送"
+></van-dialog>

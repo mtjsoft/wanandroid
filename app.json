@@ -15,8 +15,7 @@
     "pages/done/done",
     "pages/todo/todo",
     "pages/chapters/chapters",
-    "pages/chapterslist/chapterslist",
-    "pages/serverkey/serverkey"
+    "pages/chapterslist/chapterslist"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -66,6 +66,15 @@ Page({
     var title = that.data.pagerList[index].title;
     var link = that.data.pagerList[index].link;
     util.pushMsg(title, "[" + link + "](" + link + ")");
+    that.setData({
+      showDetail: true
+    })
+  },
+
+  onClose: function () {
+    that.setData({
+      showDetail: false
+    })
   },
 
   /**
@@ -81,45 +90,37 @@ Page({
    */
   collect: function (event) {
     that = this; //不要漏了这句，很重要
-    var islogin = util.getNickName()
-    if (islogin == null || islogin == "") {
-      wx.showToast({
-        title: '请先登录',
-        icon: 'none'
-      })
-    } else {
-      var postion = event.currentTarget.id
-      var collectid = that.data.pagerList[postion].id
-      var oId = that.data.pagerList[postion].originId
-      if (oId == null) {
-        oId = -1
-      }
-      wx.showLoading({
-        title: '正在加载...',
-      })
-      util.post(api.uncollect.replace("$1", collectid), {
-        originId: oId
-      }).then((res) => {
-        wx.hideLoading()
-        var update = that.data.pagerList
-        update.splice(postion,1)
-        that.setData({
-          pagerList: update
-        })
-        wx.showToast({
-          title: '取消收藏成功',
-          icon: 'success',
-          duration: 1000
-        })
-      }).catch((errMsg) => {
-        wx.hideLoading()
-        wx.showToast({
-          title: errMsg,
-          icon: 'none',
-          duration: 1000
-        })
-      });
+    var postion = event.currentTarget.id
+    var collectid = that.data.pagerList[postion].id
+    var oId = that.data.pagerList[postion].originId
+    if (oId == null) {
+      oId = -1
     }
+    wx.showLoading({
+      title: '正在加载...',
+    })
+    util.post(api.uncollect.replace("$1", collectid), {
+      originId: oId
+    }).then((res) => {
+      wx.hideLoading()
+      var update = that.data.pagerList
+      update.splice(postion, 1)
+      that.setData({
+        pagerList: update
+      })
+      wx.showToast({
+        title: '取消收藏成功',
+        icon: 'success',
+        duration: 1000
+      })
+    }).catch((errMsg) => {
+      wx.hideLoading()
+      wx.showToast({
+        title: errMsg,
+        icon: 'none',
+        duration: 1000
+      })
+    });
   },
 
   /**

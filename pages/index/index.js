@@ -75,9 +75,12 @@ Page({
   imageClick: function (event) {
     that = this; //不要漏了这句，很重要
     var index = event.currentTarget.dataset.index;
-    var title = that.data.pagerList[index].title;
-    var link = that.data.pagerList[index].url;
+    var title = that.data.banner[index].title;
+    var link = that.data.banner[index].url;
     util.pushMsg(title, "[" + link + "](" + link + ")");
+    that.setData({
+      showDetail: true
+    })
   },
   /**
    * item点击事件
@@ -88,6 +91,15 @@ Page({
     var title = that.data.pagerList[index].title;
     var link = that.data.pagerList[index].link;
     util.pushMsg(title, "[" + link + "](" + link + ")");
+    that.setData({
+      showDetail: true
+    })
+  },
+
+  onClose: function () {
+    that.setData({
+      showDetail: false
+    })
   },
 
   /**
@@ -103,55 +115,47 @@ Page({
    */
   collect: function (event) {
     that = this; //不要漏了这句，很重要
-    var islogin = util.getNickName()
-    if (islogin == null || islogin == "") {
-      wx.showToast({
-        title: '请先登录',
-        icon: 'none'
-      })
+    var postion = event.currentTarget.id
+    var collectid = that.data.pagerList[postion].id
+    wx.showLoading({
+      title: '正在加载...',
+    })
+    //如果已收藏，就取消收藏
+    if (that.data.pagerList[postion].collect) {
+      util.post(api.uncollect_originId.replace("$1", collectid))
+        .then((res) => {
+          wx.hideLoading()
+          var update = that.data.pagerList
+          update[postion].collect = false
+          that.setData({
+            pagerList: update
+          })
+          wx.showToast({
+            title: '取消收藏成功',
+            icon: 'success',
+            duration: 1000
+          })
+        }).catch((errMsg) => {
+          wx.hideLoading()
+        });
     } else {
-      var postion = event.currentTarget.id
-      var collectid = that.data.pagerList[postion].id
-      wx.showLoading({
-        title: '正在加载...',
-      })
-      //如果已收藏，就取消收藏
-      if (that.data.pagerList[postion].collect) {
-        util.post(api.uncollect_originId.replace("$1", collectid))
-          .then((res) => {
-            wx.hideLoading()
-            var update = that.data.pagerList
-            update[postion].collect = false
-            that.setData({
-              pagerList: update
-            })
-            wx.showToast({
-              title: '取消收藏成功',
-              icon: 'success',
-              duration: 1000
-            })
-          }).catch((errMsg) => {
-            wx.hideLoading()
-          });
-      } else {
-        //未收藏，添加收藏
-        util.post(api.collect.replace("$1", collectid))
-          .then((res) => {
-            wx.hideLoading()
-            var update = that.data.pagerList
-            update[postion].collect = true
-            that.setData({
-              pagerList: update
-            })
-            wx.showToast({
-              title: '收藏成功',
-              icon: 'success',
-              duration: 1000
-            })
-          }).catch((errMsg) => {
-            wx.hideLoading()
-          });
-      }
+      //未收藏，添加收藏
+      util.post(api.collect.replace("$1", collectid))
+        .then((res) => {
+          wx.hideLoading()
+          var update = that.data.pagerList
+          update[postion].collect = true
+          that.setData({
+            pagerList: update
+          })
+          wx.showToast({
+            title: '收藏成功',
+            icon: 'success',
+            duration: 1000
+          })
+        }).catch((errMsg) => {
+          wx.hideLoading()
+        });
     }
   },
 

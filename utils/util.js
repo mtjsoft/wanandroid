@@ -82,7 +82,7 @@ function request(url, data = {}, method = "GET") {
             // 请先登录
             wx.showModal({
               title: '提示',
-              content: '请先登录！',
+              content: '账号未登录，请先前往登录！',
               success(res) {
                 if (res.confirm) {
                   wx.navigateTo({
