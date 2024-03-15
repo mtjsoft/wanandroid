@@ -3,6 +3,7 @@ const app = getApp()
 const util = require('../../utils/util.js');
 const api = require('../../config/api.js');
 var that = this
+let rewardedVideoAd = null
 Page({
 
   /**
@@ -19,6 +20,18 @@ Page({
    */
   onLoad: function (options) {
     that = this
+    if (wx.createRewardedVideoAd) {
+      rewardedVideoAd = wx.createRewardedVideoAd({ adUnitId: 'adunit-5546baf520d7b86c' })
+      rewardedVideoAd.onLoad(() => {
+        console.log('onLoad event emit')
+      })
+      rewardedVideoAd.onError((err) => {
+        console.log('onError event emit', err)
+      })
+      rewardedVideoAd.onClose((res) => {
+        console.log('onClose event emit', res)
+      })
+    }
   },
 
   /**
@@ -84,10 +97,21 @@ Page({
    * 赞赏支持
    */
   showQrcode() {
-    wx.previewImage({
-      urls: ['https://www.mtjsoft.cn/media/mtj/wx_zs.png'],
-      current: 'https://www.mtjsoft.cn/media/mtj/wx_zs.png' // 当前显示图片的http链接      
-    })
+    // wx.previewImage({
+    //   urls: ['https://www.mtjsoft.cn/media/mtj/wx_zs.png'],
+    //   current: 'https://www.mtjsoft.cn/media/mtj/wx_zs.png' // 当前显示图片的http链接      
+    // })
+    // 用户触发广告后，显示激励视频广告
+    if (rewardedVideoAd) {
+      rewardedVideoAd.show().catch(() => {
+        // 失败重试
+        rewardedVideoAd.load()
+          .then(() => rewardedVideoAd.show())
+          .catch(err => {
+            console.error('激励视频 广告显示失败', err)
+          })
+      })
+    }
   },
 
   /**
@@ -192,8 +216,8 @@ Page({
   getIsShowToDo: function () {
     if (!that.data.isShowToDo) {
       util.wxCloud("versionPass", {
-          versionCode: app.globalData.versionCode
-        })
+        versionCode: app.globalData.versionCode
+      })
         .then((res) => {
           console.log(res);
           that.setData({

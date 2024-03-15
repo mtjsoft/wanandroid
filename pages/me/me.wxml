@@ -55,13 +55,6 @@
   </view>
 
   <view class="cu-item arrow">
-      <view class="content" bindtap="showQrcode">
-        <text class="cuIcon-appreciatefill text-red"></text>
-        <text class="text-grey">赞赏支持</text>
-      </view>
-    </view>
-
-  <view class="cu-item arrow">
     <navigator class="content" url="/pages/about/about" hover-class="none">
       <text class="cuIcon-emoji text-orange"></text>
       <text class="text-grey">关于我们</text>
@@ -74,4 +67,12 @@
       <text class="text-grey">退出登陆</text>
     </view>
   </view>
+
+  <view class="cu-item arrow">
+      <view class="content" bindtap="showQrcode">
+        <text class="cuIcon-appreciatefill text-red"></text>
+        <text class="text-grey">看视频广告免费支持一下吧</text>
+      </view>
+  </view>
+
 </view>
